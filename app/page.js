@@ -37,7 +37,7 @@ function Logo({ compact = false }) {
   );
 }
 
-function Home({ onPlay, onEnterPortfolio, audience, setAudience, soundEnabled, setSoundEnabled }) {
+function Home({ onPlay, onEnterPortfolio, onBackLanding, audience, setAudience, soundEnabled, setSoundEnabled }) {
   const carousel=useRef(null); const [slide,setSlide]=useState(0);
   const visibleGames=audience==="discovery"?beginnerGames:games;
   const go=(index)=>{const next=(index+visibleGames.length)%visibleGames.length;setSlide(next);const el=carousel.current;if(el)el.scrollTo({left:next*el.clientWidth,behavior:"smooth"})};
@@ -45,7 +45,7 @@ function Home({ onPlay, onEnterPortfolio, audience, setAudience, soundEnabled, s
   return (
     <main className="page-shell">
       <div className="orb orb-one" /><div className="orb orb-two" />
-      <header><Logo /><button className="sound" onClick={() => setSoundEnabled(!soundEnabled)} aria-label={soundEnabled ? "Désactiver le son" : "Activer le son"} aria-pressed={soundEnabled}>{soundEnabled ? "⌁" : "×"}</button></header>
+      <header><Logo /><div className="home-actions"><button className="sound" onClick={() => setSoundEnabled(!soundEnabled)} aria-label={soundEnabled ? "Désactiver le son" : "Activer le son"} aria-pressed={soundEnabled}>{soundEnabled ? "⌁" : "×"}</button><button className="home-return" onClick={onBackLanding}>ACCUEIL</button></div></header>
       <section className="hero">
         <div className="eyebrow"><span /> ACCÈS AU PORTFOLIO</div>
         <h1>Débloque<br />notre <em>univers.</em></h1>
@@ -275,6 +275,40 @@ const hackathonMemories = [
   { photo: require("../images/1769461821962.jpg").default, event: "TECH CONNECT" },
 ];
 
+function Landing({ onEnterPortfolio, onExploreGames }) {
+  return (
+    <main className="landing-page">
+      <header className="landing-nav">
+        <Logo />
+        <nav aria-label="Navigation principale">
+          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+      <section className="landing-hero">
+        <Image className="landing-team-image" src={teamPhoto} alt="Les membres du club Innoverse ENIAD réunis" fill priority sizes="100vw" />
+        <div className="landing-shade" />
+        <div className="landing-content">
+          <div className="landing-kicker"><i /> CLUB D’INNOVATION · ENIAD</div>
+          <h1>Innoverse</h1>
+          <p>Les idées prennent vie quand on les construit ensemble. Découvre une communauté qui imagine, apprend et crée autour de la technologie.</p>
+          <div className="landing-actions">
+            <button className="landing-primary" onClick={onEnterPortfolio}>DÉCOUVRIR LE CLUB <span aria-hidden="true">↗</span></button>
+            <button className="landing-secondary" onClick={onExploreGames}>EXPLORER LES JEUX <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div className="landing-photo-caption">INNOVERSE · ENIAD <span>COMMUNAUTÉ · CRÉATIVITÉ · TECHNOLOGIE</span></div>
+      </section>
+      <section className="landing-signals" aria-label="Univers Innoverse">
+        <span><b>01</b> APPRENDRE ENSEMBLE</span>
+        <span><b>02</b> CRÉER DES PROJETS</span>
+        <span><b>03</b> PARTAGER DES IDÉES</span>
+        <button onClick={onEnterPortfolio}>RENCONTRER LE CLUB <span aria-hidden="true">↗</span></button>
+      </section>
+    </main>
+  );
+}
+
 function Portfolio({ onBack }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const activeMember = activeIndex === null ? null : members[activeIndex];
@@ -395,8 +429,10 @@ function Portfolio({ onBack }) {
 }
 
 export default function Page() {
-  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
-  if(portfolio) return <Portfolio onBack={()=>{setPortfolio(false);setWon(false);setGame(null)}}/>;
+  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
+  if(portfolio) return <Portfolio onBack={()=>{setPortfolio(false);setWon(false);setGame(null);setShowGames(false)}}/>;
   if(won) return <Victory onEnter={()=>setPortfolio(true)}/>;
-  return game ? <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)} soundEnabled={soundEnabled}/> : <Home onPlay={setGame} onEnterPortfolio={()=>setPortfolio(true)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
+  if(game) return <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)} soundEnabled={soundEnabled}/>;
+  if(showGames) return <Home onPlay={setGame} onEnterPortfolio={()=>setPortfolio(true)} onBackLanding={()=>setShowGames(false)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
+  return <Landing onEnterPortfolio={()=>setPortfolio(true)} onExploreGames={()=>setShowGames(true)}/>;
 }
