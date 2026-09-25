@@ -46,6 +46,45 @@
 .db-disc:before,.db-disc:after{content:"";position:absolute;left:0;width:100%;height:22px;border-radius:50%;border-bottom:2px solid rgba(255,255,255,.55)}
 .db-disc:before{top:17px}.db-disc:after{top:36px}
 .sql-options button code{font-size:11px;color:#253161}
+
+/* Carousel alignment fix: exactly one game per console screen. */
+.arcade-console .game-list{display:grid;grid-auto-flow:column;grid-auto-columns:100%;grid-template-rows:1fr;align-items:stretch}
+.arcade-console .game-list>.game-card,.arcade-console .game-list>.game-card:first-child,.arcade-console .game-list>.game-card:nth-child(n){grid-column:auto!important;grid-row:1!important;align-self:stretch!important;justify-self:stretch!important;width:100%!important;margin:0!important;scroll-snap-align:start;scroll-snap-stop:always}
+.arcade-console .game-copy{position:absolute;left:24px;right:24px;bottom:24px;width:auto}
+.arcade-console .game-copy strong{display:block;line-height:1.05;margin-bottom:6px}
+.arcade-console .game-copy small{display:block;line-height:1.35}
+.arcade-console .game-number{z-index:2;line-height:1}
+.arcade-console .icon-orbit{z-index:2}
+.arcade-console .game-card:after{z-index:0}
+.arcade-console .console-top{padding-left:12px;padding-right:12px}
+.arcade-console .carousel-controls{position:relative;z-index:2}
+
+/* Definitive carousel track: one non-overlapping slide per viewport. */
+.arcade-console .game-list{
+  display:flex!important;
+  flex-flow:row nowrap!important;
+  align-items:stretch!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-snap-type:x mandatory!important;
+  scroll-behavior:smooth;
+}
+.arcade-console .game-list>.game-card,
+.arcade-console .game-list>.game-card:first-child,
+.arcade-console .game-list>.game-card:nth-child(n){
+  position:relative!important;
+  flex:0 0 100%!important;
+  min-width:100%!important;
+  max-width:100%!important;
+  width:100%!important;
+  grid-column:unset!important;
+  grid-row:unset!important;
+  inset:auto!important;
+  margin:0!important;
+  transform:none;
+  scroll-snap-align:start!important;
+}
+.arcade-console .game-list>.game-card:active{transform:none!important}
 @media(max-height:740px){
   .play-intro{margin-top:18px}
   .play-intro h2{font-size:38px;margin-bottom:4px}

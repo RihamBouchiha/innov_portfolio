@@ -59,7 +59,7 @@ function Home({ onPlay, audience, setAudience }) {
           <div className="game-list" ref={carousel} onScroll={e=>setSlide(Math.round(e.currentTarget.scrollLeft/e.currentTarget.clientWidth))}>
             {visibleGames.map((game, index) => (
               <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
-                <span className="game-number">{game.number}</span>
+                <span className="game-number">{String(index+1).padStart(2,"0")}</span>
                 <span className="icon-orbit"><Icon name={game.icon} /></span>
                 <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
                 <span className="arrow">↗</span>
