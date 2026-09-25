@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./readability.css";
 
 export const metadata = {
   title: "Innoverse — Mind Gate",

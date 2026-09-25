@@ -1,0 +1,42 @@
+/* Large, touch-first play surfaces shared by every game. */
+.play-shell{padding-left:16px;padding-right:16px}
+.play-intro{margin-top:30px}
+.play-intro h2{font-size:clamp(40px,12vw,54px);margin-top:12px}
+.play-intro p{font-size:13px}
+.game-zone{width:100%;margin-top:24px;padding:26px 12px 30px;min-height:430px;justify-content:center}
+.game-status{margin-bottom:20px}
+.game-status b{font-size:19px}
+.game-status span{font-size:12px;margin-top:6px}
+.memory-board{width:min(90vw,390px);grid-template-columns:repeat(2,1fr);gap:12px}
+.memory-board button{aspect-ratio:1.48;border-radius:20px;font-size:25px;background:linear-gradient(145deg,#fff,#e9efff);box-shadow:0 12px 24px rgba(48,60,130,.12)}
+.memory-board button:after{font-size:17px}
+.memory-board button.flipped{background:linear-gradient(145deg,#18244c,#302267)}
+.memory-board button.flipped span{color:#8ff6ff;text-shadow:0 0 15px rgba(76,226,255,.45)}
+.tic-board,.sudoku-board{width:min(88vw,370px);gap:9px}
+.tic-board button,.sudoku-board button{border-radius:18px;font-size:48px}
+.number-pad{gap:13px;margin-top:24px}
+.number-pad button{width:72px;height:58px;font-size:23px}
+.flash-display{width:min(88vw,370px);gap:10px}
+.flash-display span{height:82px;font-size:35px;border-radius:17px}
+.flash-pad{grid-template-columns:repeat(3,min(25vw,88px));gap:11px}
+.flash-pad button{height:58px;font-size:19px;border-radius:14px}
+.binary-signal{gap:10px}
+.binary-signal span{width:min(19vw,70px);height:88px;font-size:36px}
+.binary-options button,.console-options button{min-width:86px;height:56px;font-size:17px}
+.code-window,.console-box{width:min(91vw,410px)}
+.code-window button{min-height:57px;padding:16px}
+.code-window code{font-size:14px}
+.console-box{min-height:158px;padding:25px}
+.console-box code{font-size:15px;line-height:1.5}
+.packet-grid button{height:123px}
+.packet-grid code{font-size:17px}
+@media(max-height:740px){
+  .play-intro{margin-top:18px}
+  .play-intro h2{font-size:38px;margin-bottom:4px}
+  .game-zone{margin-top:16px;min-height:390px;padding-top:20px}
+  .memory-board{gap:8px}
+  .memory-board button{aspect-ratio:1.65}
+  .flash-display span{height:65px}
+  .flash-pad button{height:48px}
+  .packet-grid button{height:105px}
+}
