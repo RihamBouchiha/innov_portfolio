@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const games = [
@@ -183,13 +184,114 @@ function Victory({ onEnter }) {
   return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> ACCÈS AUTORISÉ</div><h2>Bien joué,<br/><em>esprit brillant.</em></h2><p>Tu viens de débloquer l'accès<br/>à l'univers Innoverse.</p><button onClick={onEnter}>ENTRER DANS LE PORTFOLIO <span>→</span></button><small>Découvre l'équipe derrière Innoverse</small></div>;
 }
 
-const firstMembers=[
-  {name:"Fahim Mariam",role:"Team Leader",initials:"FM",quote:"Leadership is action, not position.",tone:"leader"},
-  {name:"Ferhan Abdelali",role:"Vice Team Leader",initials:"FA",quote:"Quiet energy, loud results.",tone:"vice"},
-  {name:"Bouchikha Riham",role:"Responsable Communication",initials:"BR",quote:"Words that build trust open doors.",tone:"communication"}
+const members = [
+  { name: "Fahim Mariam", role: "Team Leader", photo: require("../images/image copy 14.png").default },
+  { name: "Ferhan Abdelali", role: "Vice Team Leader", photo: require("../images/image copy 13.png").default },
+  { name: "Bouchikha Riham", role: "Communication Responsable", photo: require("../images/image copy 12.png").default },
+  { name: "Daba Siham", role: "Secretary General", photo: require("../images/image copy 11.png").default },
+  { name: "El Fadili Abdelkoddouss", role: "Event Manager", photo: require("../images/image copy 10.png").default },
+  { name: "Choukrani Salma", role: "Vice Event Manager", photo: require("../images/image copy 9.png").default },
+  { name: "Halla Nezha", role: "Human Resources", photo: require("../images/image copy 8.png").default },
+  { name: "Chouichou Bilal", role: "Sponsorship Responsable", photo: require("../images/image copy 7.png").default },
+  { name: "Alloufi Yasser", role: "Vice Sponsorship Responsable", photo: require("../images/image copy 6.png").default },
+  { name: "Elebar Ayoub", role: "Project Manager", photo: require("../images/image copy 5.png").default },
+  { name: "Kejja Hiba", role: "Vice Project Manager", photo: require("../images/image copy 4.png").default },
+  { name: "Zarioh Maysara", role: "Treasurer", photo: require("../images/image copy 3.png").default },
+  { name: "El Fankari Mohamed", role: "Training Manager", photo: require("../images/image copy 2.png").default },
+  { name: "El Ouazzani Mohamed Rayane", role: "Media Manager & Graphic Designer", photo: require("../images/image copy.png").default },
+  { name: "Mihi Rida", role: "Consultant", photo: require("../images/image.png").default },
 ];
-function Portfolio({onBack}){
-  return <main className="portfolio"><nav><Logo/><button onClick={onBack}>RETOUR AUX JEUX</button></nav><section className="portfolio-hero"><div className="portfolio-kicker"><i/> PORTFOLIO DÉBLOQUÉ</div><h1>Les esprits derrière<br/><em>Innoverse.</em></h1><p>Une équipe, plusieurs talents, une vision commune : transformer les idées en expériences.</p><div className="portfolio-stats"><span><b>15</b>MEMBRES</span><span><b>01</b>VISION</span><span><b>∞</b>IDÉES</span></div></section><section className="team-section"><div className="team-heading"><span>CORE TEAM</span><small>01 — LEADERSHIP</small></div><div className="member-stack">{firstMembers.map((member,index)=><article className={`member-card ${member.tone}`} key={member.name}><div className="member-photo"><div className="member-placeholder">{member.initials}</div><span>PHOTO À AJOUTER</span></div><div className="member-index">0{index+1}</div><div className="member-info"><small>{member.role}</small><h2>{member.name}</h2><p>“{member.quote}”</p></div></article>)}</div></section><footer><span><i/> INNOVERSE TEAM</span><span>2026</span></footer></main>
+
+const teamPhoto = require("../images/image copy 15.png").default;
+
+const eventMemories = [
+  { type: "photo", photo: require("../images/IMG-20251009-WA0151.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0416.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0447.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0694.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0802.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0814.jpg").default },
+  { type: "photo", photo: require("../images/IMG-20251009-WA0861.jpg").default },
+  { type: "photo", photo: require("../images/IMG_20251009_191146.jpg").default },
+  { type: "video", src: "/events/VID-20251009-WA0865.mp4", poster: require("../images/IMG-20251009-WA0151.jpg").default.src },
+  { type: "video", src: "/events/VID-20251010-WA0025.mp4", poster: require("../images/IMG-20251009-WA0416.jpg").default.src },
+];
+
+function Portfolio({ onBack }) {
+  const [activeIndex, setActiveIndex] = useState(null);
+  const activeMember = activeIndex === null ? null : members[activeIndex];
+
+  useEffect(() => {
+    if (activeIndex === null) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setActiveIndex(null);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [activeIndex]);
+
+  return (
+    <main className="portfolio">
+      <nav className="portfolio-nav"><Logo/><button onClick={onBack}>RETOUR AUX JEUX</button></nav>
+      <section className="club-intro">
+        <div className="club-copy">
+          <div className="portfolio-kicker"><i/> CLUB D’INNOVATION · ENIAD</div>
+          <h1>Les idées prennent vie <em>ensemble.</em></h1>
+          <p>Innoverse est le club d’innovation de l’ENIAD. Une équipe étudiante aux talents complémentaires, réunie pour imaginer des projets et créer des expériences sur le campus.</p>
+          <a className="linkedin-link" href="https://www.linkedin.com/company/innoverseeniad/posts/" target="_blank" rel="noreferrer">DÉCOUVRIR INNOVERSE SUR LINKEDIN <span>↗</span></a>
+          <div className="club-count"><b>15</b><span>PORTRAITS<br/>DE L’ÉQUIPE</span></div>
+        </div>
+        <figure className="team-photo">
+          <Image src={teamPhoto} alt="Photo de groupe de l’équipe Innoverse" width={800} height={800} priority sizes="(max-width: 760px) 100vw, 48vw" />
+          <figcaption>INNOVERSE · ENIAD</figcaption>
+        </figure>
+      </section>
+      <section className="team-section album-section">
+        <div className="team-heading"><span>L’ÉQUIPE INNOVERSE</span><small>15 MEMBRES · 01 ALBUM</small></div>
+        <div className="member-album">
+          {members.map((member, index) => (
+            <button className="album-item" key={member.name} onClick={() => setActiveIndex(index)} aria-label={`Agrandir la photo de ${member.name}`}>
+              <span className="album-photo"><Image src={member.photo} alt={`Portrait de ${member.name}, ${member.role}`} width={800} height={1067} sizes="(max-width: 620px) 50vw, (max-width: 980px) 33vw, 25vw" /></span>
+              <span className="album-caption"><b>{member.name}</b><small>{member.role}</small></span>
+              <span className="album-zoom" aria-hidden="true">↗</span>
+            </button>
+          ))}
+        </div>
+      </section>
+      <section className="events-section" aria-labelledby="events-title">
+        <div className="events-heading">
+          <div><span className="events-kicker">INNOVERSE · SUR LE TERRAIN</span><h2 id="events-title">Events<span> / </span>Journée d’intégration</h2></div>
+          <small>10 SOUVENIRS · OCT. 2025</small>
+        </div>
+        <div className="event-album" aria-label="Album horizontal de la journée d’intégration">
+          {eventMemories.map((memory, index) => (
+            <figure className={`event-memory ${memory.type}`} key={memory.type === "video" ? memory.src : memory.photo.src}>
+              {memory.type === "video" ? (
+                <video controls playsInline preload="metadata" poster={memory.poster} aria-label={`Vidéo souvenir ${index + 1} de la journée d’intégration`}>
+                  <source src={memory.src} type="video/mp4" />
+                </video>
+              ) : (
+                <Image src={memory.photo} alt={`Photo ${index + 1} de la journée d’intégration Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 75vw, 300px" />
+              )}
+              <figcaption><span>{memory.type === "video" ? "EN MOUVEMENT" : "JOURNÉE D’INTÉGRATION"}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+      <footer><span><i/> INNOVERSE TEAM</span><span>ENIAD</span></footer>
+      {activeMember && (
+        <div className="photo-viewer" role="dialog" aria-modal="true" aria-label={`Portrait de ${activeMember.name}`} onClick={() => setActiveIndex(null)}>
+          <button className="viewer-close" onClick={() => setActiveIndex(null)} aria-label="Fermer">×</button>
+          <button className="viewer-step viewer-prev" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + members.length - 1) % members.length); }} aria-label="Photo précédente">←</button>
+          <figure onClick={(event) => event.stopPropagation()}>
+            <Image src={activeMember.photo} alt={`Portrait de ${activeMember.name}, ${activeMember.role}`} width={800} height={1067} sizes="90vw" />
+            <figcaption><b>{activeMember.name}</b><span>{activeMember.role}</span></figcaption>
+          </figure>
+          <button className="viewer-step viewer-next" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + 1) % members.length); }} aria-label="Photo suivante">→</button>
+        </div>
+      )}
+    </main>
+  );
 }
 
 export default function Page() {
