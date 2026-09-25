@@ -6,11 +6,15 @@ const games = [
   { id: "sudoku", number: "01", title: "Sudoku", subtitle: "Logique & précision", icon: "grid", tone: "cyan" },
   { id: "tictactoe", number: "02", title: "Morpion", subtitle: "Stratégie express", icon: "xo", tone: "violet" },
   { id: "memory", number: "03", title: "Mémoire", subtitle: "Focus & rapidité", icon: "cards", tone: "blue" },
+  { id: "flashcode", number: "04", title: "Code flash", subtitle: "Mémoire instantanée", icon: "pulse", tone: "coral" },
+  { id: "oddone", number: "05", title: "L'intrus", subtitle: "Observation aiguisée", icon: "odd", tone: "lime" },
 ];
 
 const Icon = ({ name }) => {
   if (name === "grid") return <span className="grid-icon">{Array.from({ length: 9 }).map((_, i) => <i key={i} />)}</span>;
   if (name === "xo") return <span className="xo-icon"><b>×</b><i>○</i></span>;
+  if (name === "pulse") return <span className="pulse-icon">428</span>;
+  if (name === "odd") return <span className="odd-icon"><i>●</i><i>●</i><i>■</i></span>;
   return <span className="cards-icon"><i /><i /><i /></span>;
 };
 
@@ -105,9 +109,27 @@ function Memory({ onWin }) {
   return <><div className="game-status"><b>Connecte les paires</b><span>{done.length/2} / 4 retrouvées</span></div><div className="memory-board">{deck.map((s,i)=><button key={i} onClick={()=>flip(i)} className={open.includes(i)||done.includes(i)?"flipped":""}><span>{s}</span></button>)}</div></>;
 }
 
+function FlashCode({ onWin }) {
+  const makeCode = () => Array.from({length:4},()=>Math.floor(Math.random()*9)+1);
+  const [code,setCode]=useState(makeCode); const [visible,setVisible]=useState(true); const [answer,setAnswer]=useState([]); const [message,setMessage]=useState("Mémorise ce code");
+  useEffect(()=>{const timer=setTimeout(()=>{setVisible(false);setMessage("Recompose le code")},2200);return()=>clearTimeout(timer)},[code]);
+  const press=(n)=>{if(visible||answer.length===4)return;const next=[...answer,n];setAnswer(next);if(next.length===4){if(next.join("")===code.join(""))setTimeout(onWin,450);else setTimeout(()=>{setCode(makeCode());setAnswer([]);setVisible(true);setMessage("Encore une fois !")},650)}};
+  return <><div className="game-status"><b>{message}</b><span>4 chiffres, 2 secondes</span></div><div className={`flash-display ${visible?"visible":""}`}>{visible?code.map((n,i)=><span key={i}>{n}</span>):[0,1,2,3].map((_,i)=><span key={i}>{answer[i]??"·"}</span>)}</div><div className="flash-pad">{[1,2,3,4,5,6,7,8,9].map(n=><button key={n} onClick={()=>press(n)}>{n}</button>)}</div></>;
+}
+
+const oddRounds = [
+  {normal:"●",odd:"■"},{normal:"◆",odd:"◇"},{normal:"▲",odd:"▼"},{normal:"✦",odd:"✧"}
+];
+function OddOne({ onWin }) {
+  const [round,setRound]=useState(0); const [oddIndex,setOddIndex]=useState(()=>Math.floor(Math.random()*9)); const [hit,setHit]=useState(null);
+  const choose=(i)=>{if(hit!==null)return;if(i!==oddIndex){setHit("miss");setTimeout(()=>setHit(null),450);return}setHit("good");setTimeout(()=>{if(round===oddRounds.length-1)onWin();else{setRound(round+1);setOddIndex(Math.floor(Math.random()*9));setHit(null)}},500)};
+  const data=oddRounds[round];
+  return <><div className="game-status"><b>Trouve l'intrus</b><span>Niveau {round+1} / {oddRounds.length}</span></div><div className={`odd-board ${hit||""}`}>{Array.from({length:9}).map((_,i)=><button key={i} onClick={()=>choose(i)} className={i===oddIndex&&hit==="good"?"found":""}>{i===oddIndex?data.odd:data.normal}</button>)}</div></>;
+}
+
 function GameScreen({ gameId, onBack, onWin }) {
   const game=games.find(g=>g.id===gameId);
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/03</span></header><section className="play-intro"><div className="eyebrow"><span/> DÉFI EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>}</section></main>;
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> DÉFI EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
 }
 
 function Victory({ onClose }) {
