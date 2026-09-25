@@ -44,7 +44,7 @@ function Home({ onPlay }) {
           {games.map((game, index) => (
             <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
               <span className="game-number">{game.number}</span>
-              <Icon name={game.icon} />
+              <span className="icon-orbit"><Icon name={game.icon} /></span>
               <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
               <span className="arrow">↗</span>
               <span className="play-label">JOUER</span>
