@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 
 const games = [
-  { id: "sudoku", number: "01", title: "Sudoku", subtitle: "Logique & précision", icon: "grid", tone: "cyan" },
-  { id: "tictactoe", number: "02", title: "Morpion", subtitle: "Stratégie express", icon: "xo", tone: "violet" },
-  { id: "memory", number: "03", title: "Mémoire", subtitle: "Focus & rapidité", icon: "cards", tone: "blue" },
-  { id: "flashcode", number: "04", title: "Code flash", subtitle: "Mémoire instantanée", icon: "pulse", tone: "coral" },
-  { id: "oddone", number: "05", title: "L'intrus", subtitle: "Observation aiguisée", icon: "odd", tone: "lime" },
+  { id: "bughunt", number: "01", title: "Bug Hunt", subtitle: "Repère l'erreur dans le code", icon: "grid", tone: "cyan" },
+  { id: "binary", number: "02", title: "Binary Gate", subtitle: "Décode le signal binaire", icon: "xo", tone: "violet" },
+  { id: "memory", number: "03", title: "Cache Match", subtitle: "Connecte les symboles du web", icon: "cards", tone: "blue" },
+  { id: "flashcode", number: "04", title: "Access Key", subtitle: "Mémorise la clé système", icon: "pulse", tone: "coral" },
+  { id: "console", number: "05", title: "Console", subtitle: "Prédit la sortie du programme", icon: "odd", tone: "lime" },
 ];
 
 const Icon = ({ name }) => {
@@ -97,7 +97,7 @@ function Sudoku({ onWin }) {
   return <><div className="game-status"><b>Mini Sudoku 3×3</b><span>Chaque ligne contient 1, 2 et 3</span></div><div className="sudoku-board">{board.map((v,i)=><button key={i} className={`${selected===i?"selected":""} ${wrong===i?"wrong":""} ${sudokuStart[i]?"fixed":""}`} onClick={()=>setSelected(i)}>{v || ""}</button>)}</div><div className="number-pad">{[1,2,3].map(n=><button key={n} onClick={()=>place(n)}>{n}</button>)}</div></>;
 }
 
-const symbols = ["✦","◈","⌁","◎","✦","◈","⌁","◎"];
+const symbols = ["</>","{ }","01","#_","</>","{ }","01","#_"];
 function Memory({ onWin }) {
   const deck = useMemo(() => [...symbols].sort(()=>Math.random()-.5), []);
   const [open,setOpen]=useState([]); const [done,setDone]=useState([]);
@@ -117,19 +117,25 @@ function FlashCode({ onWin }) {
   return <><div className="game-status"><b>{message}</b><span>4 chiffres, 2 secondes</span></div><div className={`flash-display ${visible?"visible":""}`}>{visible?code.map((n,i)=><span key={i}>{n}</span>):[0,1,2,3].map((_,i)=><span key={i}>{answer[i]??"·"}</span>)}</div><div className="flash-pad">{[1,2,3,4,5,6,7,8,9].map(n=><button key={n} onClick={()=>press(n)}>{n}</button>)}</div></>;
 }
 
-const oddRounds = [
-  {normal:"●",odd:"■"},{normal:"◆",odd:"◇"},{normal:"▲",odd:"▼"},{normal:"✦",odd:"✧"}
+const bugRounds=[
+  {code:["const club = 'Innoverse';","console.log(club);","return true;"],bug:2},
+  {code:["let score = 10;","score += 5;","console.log(scores);"],bug:2},
+  {code:["if (ready) {","  launch();","// accolade manquante"],bug:2}
 ];
-function OddOne({ onWin }) {
-  const [round,setRound]=useState(0); const [oddIndex,setOddIndex]=useState(()=>Math.floor(Math.random()*9)); const [hit,setHit]=useState(null);
-  const choose=(i)=>{if(hit!==null)return;if(i!==oddIndex){setHit("miss");setTimeout(()=>setHit(null),450);return}setHit("good");setTimeout(()=>{if(round===oddRounds.length-1)onWin();else{setRound(round+1);setOddIndex(Math.floor(Math.random()*9));setHit(null)}},500)};
-  const data=oddRounds[round];
-  return <><div className="game-status"><b>Trouve l'intrus</b><span>Niveau {round+1} / {oddRounds.length}</span></div><div className={`odd-board ${hit||""}`}>{Array.from({length:9}).map((_,i)=><button key={i} onClick={()=>choose(i)} className={i===oddIndex&&hit==="good"?"found":""}>{i===oddIndex?data.odd:data.normal}</button>)}</div></>;
-}
+function BugHunt({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=i=>{if(i!==bugRounds[round].bug){setMiss(i);setTimeout(()=>setMiss(null),400);return}if(round===2)setTimeout(onWin,400);else setRound(round+1)};return <><div className="game-status"><b>Quel ligne contient le bug ?</b><span>Fichier {round+1} / 3</span></div><div className="code-window"><div><i/><i/><i/><span>main.js</span></div>{bugRounds[round].code.map((line,i)=><button className={miss===i?"line-miss":""} onClick={()=>pick(i)} key={line}><b>{i+1}</b><code>{line}</code></button>)}</div></>}
+
+function BinaryGate({onWin}){const rounds=[{bits:"0101",value:5},{bits:"1001",value:9},{bits:"1110",value:14}];const[round,setRound]=useState(0);const[miss,setMiss]=useState(false);const choose=n=>{if(n!==rounds[round].value){setMiss(true);setTimeout(()=>setMiss(false),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};const answers=[rounds[round].value,rounds[round].value+2,Math.max(0,rounds[round].value-3)].sort((a,b)=>a-b);return <><div className="game-status"><b>Convertis en décimal</b><span>Signal {round+1} / 3</span></div><div className={`binary-signal ${miss?"miss":""}`}>{rounds[round].bits.split("").map((b,i)=><span key={i}>{b}</span>)}</div><div className="binary-options">{answers.map(n=><button onClick={()=>choose(n)} key={n}>{n}</button>)}</div></>}
+
+const consoleRounds=[
+  {code:"console.log(2 + 3 * 2)",answers:[10,8,7],correct:8},
+  {code:"'code'.length",answers:[3,4,5],correct:4},
+  {code:"Boolean(0)",answers:["true","false","null"],correct:"false"}
+];
+function ConsoleGame({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==consoleRounds[round].correct){setMiss(a);setTimeout(()=>setMiss(null),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};return <><div className="game-status"><b>Que va afficher le programme ?</b><span>Commande {round+1} / 3</span></div><div className="console-box"><span>innoverse@lab:~$</span><code>{consoleRounds[round].code}</code><i>_</i></div><div className="console-options">{consoleRounds[round].answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}>{String(a)}</button>)}</div></>}
 
 function GameScreen({ gameId, onBack, onWin }) {
   const game=games.find(g=>g.id===gameId);
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> DÉFI EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>}</section></main>;
 }
 
 function Victory({ onClose }) {
