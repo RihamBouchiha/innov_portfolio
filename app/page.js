@@ -259,8 +259,8 @@ const workshopMemories = [
   { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.14_cb47e00f.jpg").default, topic: "DESIGN WEB" },
   { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.24_ce62310d.jpg").default, topic: "TRAVAIL EN ÉQUIPE" },
   { photo: require("../images/WhatsApp Image 2025-09-14 à 19.04.53_2ac08bb5.jpg").default, topic: "AGILITÉ & COLLABORATION" },
-  { photo: require("../images/Our third workshop was all about UI-UX design! ✨🖌️ Members gathered to explore the principles .webp").default, topic: "UI / UX DESIGN" },
-  { photo: require("../images/🚀 Mastering Version Control with Git & GitHub! 🔥At InnoVerse, we believe in empowering our me (1).webp").default, topic: "GIT & GITHUB" },
+  { photo: "/workshops/ui-ux.webp", width: 1200, height: 900, topic: "UI / UX DESIGN" },
+  { photo: "/workshops/git-github.webp", width: 1200, height: 900, topic: "GIT & GITHUB" },
 ];
 
 const hackathonMemories = [
