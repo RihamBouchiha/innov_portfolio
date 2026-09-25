@@ -253,7 +253,7 @@ const eventMemories = [
 ];
 
 const workshopMemories = [
-  { photo: require("../images/10.png").default, topic: "ATELIER INNOVERSE" },
+  { photo: "/workshops/atelier-innoverse.jpg", width: 1800, height: 1350, topic: "ATELIER INNOVERSE" },
   { photo: require("../images/1742991207384.jpg").default, topic: "ATELIER INNOVERSE" },
   { photo: "/workshops/web-security.jpg", width: 1800, height: 2400, topic: "WEB SECURITY" },
   { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.14_cb47e00f.jpg").default, topic: "DESIGN WEB" },
