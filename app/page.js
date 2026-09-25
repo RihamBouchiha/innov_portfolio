@@ -54,19 +54,23 @@ function Home({ onPlay, audience, setAudience }) {
         <div className="level-switch" role="group" aria-label="Choisir son parcours"><button className={audience==="discovery"?"active":""} onClick={()=>setAudience("discovery")}><b>Découverte</b><small>Classe prépa</small></button><button className={audience==="engineer"?"active":""} onClick={()=>setAudience("engineer")}><b>Ingénieur</b><small>Cycle ingénieur</small></button></div>
         <div className="section-head"><span>CHOISIS TON JEU</span><i>Glisse pour explorer</i></div>
         <div className="challenge-route" aria-hidden="true"><span>START</span><i/><i/><i/><b>PORTFOLIO</b></div>
-        <div className="game-list" ref={carousel} onScroll={e=>setSlide(Math.round(e.currentTarget.scrollLeft/e.currentTarget.clientWidth))}>
-          {visibleGames.map((game, index) => (
-            <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
-              <span className="game-number">{game.number}</span>
-              <span className="icon-orbit"><Icon name={game.icon} /></span>
-              <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
-              <span className="arrow">↗</span>
-              <span className="play-label">JOUER</span>
-              {index === 0 && <span className="recommended">RECOMMANDÉ</span>}
-            </button>
-          ))}
+        <div className="arcade-console">
+          <div className="console-top"><span><i/> INNOVERSE OS</span><b>{String(slide+1).padStart(2,"0")} / 05</b></div>
+          <div className="game-list" ref={carousel} onScroll={e=>setSlide(Math.round(e.currentTarget.scrollLeft/e.currentTarget.clientWidth))}>
+            {visibleGames.map((game, index) => (
+              <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
+                <span className="game-number">{game.number}</span>
+                <span className="icon-orbit"><Icon name={game.icon} /></span>
+                <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
+                <span className="arrow">↗</span>
+                <span className="play-label">JOUER</span>
+                {index === 0 && <span className="recommended">RECOMMANDÉ</span>}
+              </button>
+            ))}
+          </div>
+          <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label="Jeu précédent">←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label="Jeu suivant">→</button></div>
+          <div className="console-speaker" aria-hidden="true"><i/><i/><i/><i/><i/></div>
         </div>
-        <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label="Jeu précédent">←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label="Jeu suivant">→</button></div>
       </section>
       <footer><span><i /> SYSTÈME PRÊT</span><span>INNOVERSE © 2026</span></footer>
     </main>
