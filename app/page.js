@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const games = [
   { id: "bughunt", number: "01", title: "Bug Hunt", subtitle: "Repère l'erreur dans le code", icon: "grid", tone: "cyan" },
@@ -9,6 +9,15 @@ const games = [
   { id: "flashcode", number: "04", title: "Access Key", subtitle: "Mémorise la clé système", icon: "pulse", tone: "coral" },
   { id: "console", number: "05", title: "Console", subtitle: "Prédit la sortie du programme", icon: "odd", tone: "lime" },
 ];
+
+const beginnerGames = [
+  { id: "tictactoe", number: "01", title: "Morpion", subtitle: "Aligne trois symboles", icon: "xo", tone: "violet" },
+  { id: "memory", number: "02", title: "Mémoire", subtitle: "Retrouve toutes les paires", icon: "cards", tone: "blue" },
+  { id: "flashcode", number: "03", title: "Code secret", subtitle: "Mémorise quatre chiffres", icon: "pulse", tone: "coral" },
+  { id: "sudoku", number: "04", title: "Mini Sudoku", subtitle: "Complète avec 1, 2 et 3", icon: "grid", tone: "cyan" },
+  { id: "oddone", number: "05", title: "L'intrus", subtitle: "Trouve la forme différente", icon: "odd", tone: "lime" },
+];
+const allGames = [...games, ...beginnerGames.filter(g=>!games.some(x=>x.id===g.id))];
 
 const Icon = ({ name }) => {
   if (name === "grid") return <span className="grid-icon">{Array.from({ length: 9 }).map((_, i) => <i key={i} />)}</span>;
@@ -27,7 +36,11 @@ function Logo({ compact = false }) {
   );
 }
 
-function Home({ onPlay }) {
+function Home({ onPlay, audience, setAudience }) {
+  const carousel=useRef(null); const [slide,setSlide]=useState(0);
+  const visibleGames=audience==="discovery"?beginnerGames:games;
+  const go=(index)=>{const next=(index+visibleGames.length)%visibleGames.length;setSlide(next);const el=carousel.current;if(el)el.scrollTo({left:next*el.clientWidth,behavior:"smooth"})};
+  useEffect(()=>{setSlide(0);carousel.current?.scrollTo({left:0})},[audience]);
   return (
     <main className="page-shell">
       <div className="orb orb-one" /><div className="orb orb-two" />
@@ -38,10 +51,11 @@ function Home({ onPlay }) {
         <p>Un esprit curieux mérite une entrée unique.<br />Relève un défi pour accéder à notre monde.</p>
       </section>
       <section className="game-section">
-        <div className="section-head"><span>CHOISIS TON DÉFI</span><i>1 victoire requise</i></div>
+        <div className="level-switch" role="group" aria-label="Choisir son parcours"><button className={audience==="discovery"?"active":""} onClick={()=>setAudience("discovery")}><b>Découverte</b><small>Classe prépa</small></button><button className={audience==="engineer"?"active":""} onClick={()=>setAudience("engineer")}><b>Ingénieur</b><small>Cycle ingénieur</small></button></div>
+        <div className="section-head"><span>CHOISIS TON JEU</span><i>Glisse pour explorer</i></div>
         <div className="challenge-route" aria-hidden="true"><span>START</span><i/><i/><i/><b>PORTFOLIO</b></div>
-        <div className="game-list">
-          {games.map((game, index) => (
+        <div className="game-list" ref={carousel} onScroll={e=>setSlide(Math.round(e.currentTarget.scrollLeft/e.currentTarget.clientWidth))}>
+          {visibleGames.map((game, index) => (
             <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
               <span className="game-number">{game.number}</span>
               <span className="icon-orbit"><Icon name={game.icon} /></span>
@@ -52,6 +66,7 @@ function Home({ onPlay }) {
             </button>
           ))}
         </div>
+        <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label="Jeu précédent">←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label="Jeu suivant">→</button></div>
       </section>
       <footer><span><i /> SYSTÈME PRÊT</span><span>INNOVERSE © 2026</span></footer>
     </main>
@@ -133,9 +148,12 @@ const consoleRounds=[
 ];
 function ConsoleGame({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==consoleRounds[round].correct){setMiss(a);setTimeout(()=>setMiss(null),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};return <><div className="game-status"><b>Que va afficher le programme ?</b><span>Commande {round+1} / 3</span></div><div className="console-box"><span>innoverse@lab:~$</span><code>{consoleRounds[round].code}</code><i>_</i></div><div className="console-options">{consoleRounds[round].answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}>{String(a)}</button>)}</div></>}
 
+const simpleOdd=[{normal:"●",odd:"■"},{normal:"◆",odd:"◇"},{normal:"▲",odd:"▼"}];
+function OddOne({onWin}){const[round,setRound]=useState(0);const[pos,setPos]=useState(()=>Math.floor(Math.random()*9));const[miss,setMiss]=useState(false);const choose=i=>{if(i!==pos){setMiss(true);setTimeout(()=>setMiss(false),350);return}if(round===2)setTimeout(onWin,350);else{setRound(round+1);setPos(Math.floor(Math.random()*9))}};return <><div className="game-status"><b>Trouve la forme différente</b><span>Tour {round+1} / 3</span></div><div className={`odd-board ${miss?"miss":""}`}>{Array.from({length:9}).map((_,i)=><button onClick={()=>choose(i)} key={i}>{i===pos?simpleOdd[round].odd:simpleOdd[round].normal}</button>)}</div></>}
+
 function GameScreen({ gameId, onBack, onWin }) {
-  const game=games.find(g=>g.id===gameId);
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>}</section></main>;
+  const game=allGames.find(g=>g.id===gameId);
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>} {gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
 }
 
 function Victory({ onClose }) {
@@ -143,7 +161,7 @@ function Victory({ onClose }) {
 }
 
 export default function Page() {
-  const [game,setGame]=useState(null); const [won,setWon]=useState(false);
+  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [audience,setAudience]=useState("discovery");
   if(won) return <Victory onClose={()=>{setWon(false);setGame(null)}}/>;
-  return game ? <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)}/> : <Home onPlay={setGame}/>;
+  return game ? <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)}/> : <Home onPlay={setGame} audience={audience} setAudience={setAudience}/>;
 }
