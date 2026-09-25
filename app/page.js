@@ -217,6 +217,17 @@ const eventMemories = [
   { type: "video", src: "/events/VID-20251010-WA0025.mp4", poster: require("../images/IMG-20251009-WA0416.jpg").default.src },
 ];
 
+const workshopMemories = [
+  { photo: require("../images/10.png").default, topic: "ATELIER INNOVERSE" },
+  { photo: require("../images/1742991207384.jpg").default, topic: "ATELIER INNOVERSE" },
+  { photo: require("../images/2.png").default, topic: "WEB SECURITY" },
+  { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.14_cb47e00f.jpg").default, topic: "DESIGN WEB" },
+  { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.24_ce62310d.jpg").default, topic: "TRAVAIL EN ÉQUIPE" },
+  { photo: require("../images/WhatsApp Image 2025-09-14 à 19.04.53_2ac08bb5.jpg").default, topic: "AGILITÉ & COLLABORATION" },
+  { photo: require("../images/Our third workshop was all about UI-UX design! ✨🖌️ Members gathered to explore the principles .webp").default, topic: "UI / UX DESIGN" },
+  { photo: require("../images/🚀 Mastering Version Control with Git & GitHub! 🔥At InnoVerse, we believe in empowering our me (1).webp").default, topic: "GIT & GITHUB" },
+];
+
 function Portfolio({ onBack }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const activeMember = activeIndex === null ? null : members[activeIndex];
@@ -260,9 +271,11 @@ function Portfolio({ onBack }) {
       </section>
       <section className="events-section" aria-labelledby="events-title">
         <div className="events-heading">
-          <div><span className="events-kicker">INNOVERSE · SUR LE TERRAIN</span><h2 id="events-title">Events<span> / </span>Journée d’intégration</h2></div>
+          <div><span className="events-kicker">INNOVERSE · SUR LE TERRAIN</span><h2 id="events-title">Events</h2></div>
           <small>10 SOUVENIRS · OCT. 2025</small>
         </div>
+        <section className="event-subsection" aria-labelledby="integration-title">
+          <h3 id="integration-title">Journée d’intégration</h3>
         <div className="event-album" aria-label="Album horizontal de la journée d’intégration">
           {eventMemories.map((memory, index) => (
             <figure className={`event-memory ${memory.type}`} key={memory.type === "video" ? memory.src : memory.photo.src}>
@@ -277,6 +290,22 @@ function Portfolio({ onBack }) {
             </figure>
           ))}
         </div>
+        </section>
+        <section className="event-subsection workshop-subsection" aria-labelledby="workshops-title">
+          <div className="workshop-intro">
+            <span className="events-kicker">APPRENDRE · EXPÉRIMENTER · PARTAGER</span>
+            <h3 id="workshops-title">Workshops</h3>
+            <p>Nous avons organisé des ateliers pratiques autour de l’UI/UX, du design web, de la sécurité web, de l’Agile et de Git/GitHub pour apprendre ensemble en passant à l’action.</p>
+          </div>
+          <div className="event-album workshop-album" aria-label="Album horizontal des workshops Innoverse">
+            {workshopMemories.map((memory, index) => (
+              <figure className="event-memory workshop-memory" key={memory.photo.src}>
+                <Image src={memory.photo} alt={`${memory.topic} : photo d’un workshop Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
+                <figcaption><span>{memory.topic}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
       </section>
       <footer><span><i/> INNOVERSE TEAM</span><span>ENIAD</span></footer>
       {activeMember && (
