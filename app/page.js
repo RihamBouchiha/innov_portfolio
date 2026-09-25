@@ -35,6 +35,7 @@ function Home({ onPlay }) {
       </section>
       <section className="game-section">
         <div className="section-head"><span>CHOISIS TON DÉFI</span><i>1 victoire requise</i></div>
+        <div className="challenge-route" aria-hidden="true"><span>START</span><i/><i/><i/><b>PORTFOLIO</b></div>
         <div className="game-list">
           {games.map((game, index) => (
             <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
@@ -42,6 +43,7 @@ function Home({ onPlay }) {
               <Icon name={game.icon} />
               <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
               <span className="arrow">↗</span>
+              <span className="play-label">JOUER</span>
               {index === 0 && <span className="recommended">RECOMMANDÉ</span>}
             </button>
           ))}
