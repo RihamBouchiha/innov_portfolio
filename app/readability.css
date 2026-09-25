@@ -3,6 +3,11 @@
 .play-intro{margin-top:30px}
 .play-intro h2{font-size:clamp(40px,12vw,54px);margin-top:12px}
 .play-intro p{font-size:13px}
+.hero .portfolio-entry{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-width:248px;margin-top:25px;padding:15px 18px;border:0;border-radius:12px;background:linear-gradient(105deg,#176eae,#08a8ae 58%,#ff6956);box-shadow:0 12px 26px rgba(26,119,160,.2);color:#fff;font:700 10px "Space Grotesk";letter-spacing:1px;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.hero .portfolio-entry:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(26,119,160,.28)}
+.hero .portfolio-entry span{font-size:17px}
+.hero .portfolio-entry:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
+.game-invitation{margin-top:25px;color:#7d86a0;font:700 7px "Space Grotesk";letter-spacing:1.3px}
 .game-zone{width:100%;margin-top:24px;padding:26px 12px 30px;min-height:430px;justify-content:center}
 .game-status{margin-bottom:20px}
 .game-status b{font-size:19px}
@@ -46,6 +51,21 @@
 .db-disc:before,.db-disc:after{content:"";position:absolute;left:0;width:100%;height:22px;border-radius:50%;border-bottom:2px solid rgba(255,255,255,.55)}
 .db-disc:before{top:17px}.db-disc:after{top:36px}
 .sql-options button code{font-size:11px;color:#253161}
+
+/* Stable, centered cells keep X and O aligned after each move. */
+.tic-board{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));align-items:stretch}
+.tic-board button.tic-cell{width:100%;height:100%;min-width:0;min-height:0;aspect-ratio:1;padding:0;display:grid;place-items:center;line-height:1;font-size:clamp(38px,10vw,56px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.tic-board button.tic-cell span{display:block;line-height:1;transform:translateY(-.03em)}
+.tic-board{gap:12px}
+.tic-board button.tic-cell{border:1px solid rgba(46,58,103,.15);border-radius:16px;background:rgba(255,255,255,.9);box-shadow:0 6px 18px rgba(43,54,104,.1);transition:border-color .18s,box-shadow .18s,background .18s}
+.tic-board button.tic-cell:not(:disabled):hover{border-color:rgba(83,109,254,.5);background:#fff;box-shadow:0 9px 22px rgba(43,54,104,.14)}
+.tic-board button.tic-cell:focus-visible{outline:3px solid rgba(83,109,254,.4);outline-offset:2px}
+.tic-board button.tic-cell.marked.X{color:#168da9;text-shadow:0 3px 0 rgba(255,255,255,.9),0 0 18px rgba(24,216,238,.58)}
+.tic-board button.tic-cell.marked.O{color:#7541a5;text-shadow:0 3px 0 rgba(255,255,255,.9),0 0 18px rgba(167,61,224,.48)}
+.tic-board button.tic-cell:disabled{cursor:default;opacity:1}
+@keyframes tic-mark-in{from{opacity:0;transform:translateY(-.03em) scale(.65)}to{opacity:1;transform:translateY(-.03em) scale(1)}}
+.tic-board .tic-mark{animation:tic-mark-in .18s cubic-bezier(.2,.8,.25,1.25) both}
+@media(prefers-reduced-motion:reduce){.tic-board .tic-mark{animation:none}}
 
 /* Carousel alignment fix: exactly one game per console screen. */
 .arcade-console .game-list{display:grid;grid-auto-flow:column;grid-auto-columns:100%;grid-template-rows:1fr;align-items:stretch}
