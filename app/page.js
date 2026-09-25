@@ -3,6 +3,41 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+const messages = {
+  fr: {
+    chooseLanguage: "Choisis ta langue", languageHint: "Tu pourras changer de langue à tout moment.", french: "Français", english: "Anglais",
+    navLabel: "Navigation principale", clubKicker: "CLUB D’INNOVATION · ENIAD", landingDescription: "Les idées prennent vie quand on les construit ensemble. Découvre une communauté qui imagine, apprend et crée autour de la technologie.", discoverClub: "DÉCOUVRIR LE CLUB", exploreGames: "EXPLORER LES JEUX", community: "COMMUNAUTÉ · CRÉATIVITÉ · TECHNOLOGIE", learnTogether: "APPRENDRE ENSEMBLE", createProjects: "CRÉER DES PROJETS", shareIdeas: "PARTAGER DES IDÉES", meetClub: "RENCONTRER LE CLUB", changeLanguage: "LANGUE",
+    soundOff: "Désactiver le son", soundOn: "Activer le son", home: "ACCUEIL", portfolioAccess: "ACCÈS AU PORTFOLIO", homeTitle: "Débloque", homeTitleEm: "notre univers.", homeDescription: "Un esprit curieux mérite une entrée unique.", homeSubdescription: "Relève un défi pour accéder à notre monde.", directPortfolio: "ACCÉDER AU PORTFOLIO", playInvitation: "OU RELÈVE UN DÉFI POUR DÉCOUVRIR INNOVERSE", discovery: "Découverte", prepClass: "Classe prépa", engineer: "Ingénieur", engineeringCycle: "Cycle ingénieur", chooseGame: "CHOISIS TON JEU", swipeExplore: "Glisse pour explorer", start: "DÉPART", portfolio: "PORTFOLIO", play: "JOUER", recommended: "RECOMMANDÉ", systemReady: "SYSTÈME PRÊT", previousGame: "Jeu précédent", nextGame: "Jeu suivant",
+    mission: "MISSION EN COURS", playAgain: "Recommencer", yourTurn: "À toi de jouer", youWon: "Tu as gagné !", tie: "Égalité — recommence", nearly: "Presque ! Essaie encore", align: "Aligne trois symboles", sudokuRules: "Chaque ligne contient 1, 2 et 3", pairs: "Connecte les paires", pairsFound: "retrouvées", rememberCode: "Mémorise ce code", rebuildCode: "Recompose le code", tryAgain: "Encore une fois !", digitsTwoSeconds: "4 chiffres, 2 secondes", findBug: "Quelle ligne contient le bug ?", file: "Fichier", convertDecimal: "Convertis en décimal", signal: "Signal", predictOutput: "Que va afficher le programme ?", command: "Commande", quickSearch: "Recherche rapide", complexity: "Complexité", suitableStructure: "Structure adaptée", sortedArray: "Tableau trié de 1 000 éléments", nestedLoops: "Deux boucles imbriquées de taille n", lifo: "Dernier élément entré, premier sorti", linearSearch: "Recherche linéaire", binarySearch: "Recherche binaire", fullScan: "Parcours complet", query: "Construis la requête", missionNumber: "Mission", showMembers: "Afficher tous les membres", filterScores: "Filtrer les scores supérieurs à 10", sortScores: "Trier les résultats du plus grand au plus petit", signalAnalysis: "Analyse le signal", inspectTag: "Inspecte la balise", compareStructure: "Compare la structure", checkIdentifier: "Vérifie l’identifiant", corruptedPacket: "Détecte le seul paquet de données corrompu", nodesConnected: "6 NODES CONNECTÉS", level: "NIVEAU",
+    accessGranted: "ACCÈS AUTORISÉ", wellDone: "Bien joué,", brilliant: "esprit brillant.", unlockedPortfolio: "Tu viens de débloquer l'accès", innoverseWorld: "à l'univers Innoverse.", enterPortfolio: "ENTRER DANS LE PORTFOLIO", discoverTeam: "Découvre l'équipe derrière Innoverse",
+    backToLanding: "RETOUR À L’ACCUEIL", clubIntroTitle: "Les idées prennent vie", together: "ensemble.", clubDescription: "Innoverse est le club d’innovation de l’ENIAD. Une équipe étudiante aux talents complémentaires, réunie pour imaginer des projets et créer des expériences sur le campus.", discoverOnLinkedIn: "DÉCOUVRIR INNOVERSE SUR LINKEDIN", portraits: "PORTRAITS", team: "DE L’ÉQUIPE", teamPhotoAlt: "Photo de groupe de l’équipe Innoverse", teamAlbum: "L’ÉQUIPE INNOVERSE", members: "MEMBRES", album: "ALBUM", enlargePhoto: "Agrandir la photo de", portraitOf: "Portrait de", close: "Fermer", previousPhoto: "Photo précédente", nextPhoto: "Photo suivante",
+    events: "Events", memories: "SOUVENIRS", integrationDay: "Journée d’intégration", eventAlbum: "Album horizontal de la journée d’intégration", moving: "EN MOUVEMENT", integration: "JOURNÉE D’INTÉGRATION", eventPhotoAlt: "Photo de la journée d’intégration Innoverse", workshops: "Workshops", workshopKicker: "APPRENDRE · EXPÉRIMENTER · PARTAGER", workshopIntro: "Nous avons organisé des ateliers pratiques autour de l’UI/UX, du design web, de la sécurité web, de l’Agile et de Git/GitHub pour apprendre ensemble en passant à l’action.", workshopAlbum: "Album horizontal des workshops Innoverse", workshopPhotoAlt: "photo d’un workshop Innoverse", hackathons: "Hackathons", hackathonKicker: "DÉFIS · IDÉES · ESPRIT D’ÉQUIPE", hackathonAlbum: "Album horizontal des hackathons Innoverse", eventPhoto: "photo d’un événement Innoverse", stayConnected: "RESTONS CONNECTÉS", joinUs: "Join us", socialLinks: "Réseaux sociaux Innoverse", teamFooter: "INNOVERSE TEAM",
+    previous: "Précédent", next: "Suivant", anomalyScanner: "DÉTECTEUR D’ANOMALIES", live: "EN DIRECT",
+    gameTitles: { bughunt: "Bug Hunt", binary: "Binary Gate", algorithm: "Algo Flow", sql: "SQL Quest", console: "Console", tictactoe: "Morpion", memory: "Mémoire", flashcode: "Code secret", sudoku: "Mini Sudoku", oddone: "L’intrus" },
+    gameSubtitles: { bughunt: "Repère l'erreur dans le code", binary: "Décode le signal binaire", algorithm: "Analyse la logique algorithmique", sql: "Interroge la base de données", console: "Prédit la sortie du programme", tictactoe: "Aligne trois symboles", memory: "Retrouve toutes les paires", flashcode: "Mémorise quatre chiffres", sudoku: "Complète avec 1, 2 et 3", oddone: "Trouve la forme différente" },
+    roles: { "Team Leader": "Responsable d’équipe", "Vice Team Leader": "Adjoint à la direction", "Communication Responsable": "Responsable communication", "Secretary General": "Secrétaire général·e", "Event Manager": "Responsable événements", "Vice Event Manager": "Vice-responsable événements", "Human Resources": "Ressources humaines", "Sponsorship Responsable": "Responsable sponsoring", "Vice Sponsorship Responsable": "Vice-responsable sponsoring", "Project Manager": "Responsable projets", "Vice Project Manager": "Vice-responsable projets", "Treasurer": "Trésorier·ère", "Training Manager": "Responsable formation", "Media Manager & Graphic Designer": "Responsable média et graphisme", "Consultant": "Consultant·e" },
+    topics: { "ATELIER INNOVERSE": "ATELIER INNOVERSE", "WEB SECURITY": "SÉCURITÉ WEB", "DESIGN WEB": "DESIGN WEB", "TRAVAIL EN ÉQUIPE": "TRAVAIL EN ÉQUIPE", "AGILITÉ & COLLABORATION": "AGILITÉ & COLLABORATION", "UI / UX DESIGN": "DESIGN UI / UX", "GIT & GITHUB": "GIT & GITHUB" },
+    eventsLabels: { "ENIGMA VERSE": "ENIGMA VERSE", "HACKATHON INNOVERSE": "HACKATHON INNOVERSE", "TECH CONNECT": "TECH CONNECT" },
+  },
+  en: {
+    chooseLanguage: "Choose your language", languageHint: "You can change your language at any time.", french: "French", english: "English",
+    navLabel: "Main navigation", clubKicker: "INNOVATION CLUB · ENIAD", landingDescription: "Ideas come to life when we build them together. Meet a community that imagines, learns, and creates with technology.", discoverClub: "DISCOVER THE CLUB", exploreGames: "EXPLORE THE GAMES", community: "COMMUNITY · CREATIVITY · TECHNOLOGY", learnTogether: "LEARN TOGETHER", createProjects: "BUILD PROJECTS", shareIdeas: "SHARE IDEAS", meetClub: "MEET THE CLUB", changeLanguage: "LANGUAGE",
+    soundOff: "Turn sound off", soundOn: "Turn sound on", home: "HOME", portfolioAccess: "PORTFOLIO ACCESS", homeTitle: "Unlock", homeTitleEm: "our universe.", homeDescription: "A curious mind deserves a unique entrance.", homeSubdescription: "Take a challenge to enter our world.", directPortfolio: "OPEN THE PORTFOLIO", playInvitation: "OR TAKE A CHALLENGE TO DISCOVER INNOVERSE", discovery: "Discovery", prepClass: "Preparatory class", engineer: "Engineering", engineeringCycle: "Engineering cycle", chooseGame: "CHOOSE YOUR GAME", swipeExplore: "Swipe to explore", start: "START", portfolio: "PORTFOLIO", play: "PLAY", recommended: "RECOMMENDED", systemReady: "SYSTEM READY", previousGame: "Previous game", nextGame: "Next game",
+    mission: "MISSION IN PROGRESS", playAgain: "Play again", yourTurn: "Your turn", youWon: "You won!", tie: "It's a tie — try again", nearly: "Almost! Try again", align: "Get three in a row", sudokuRules: "Each row contains 1, 2, and 3", pairs: "Match the pairs", pairsFound: "matched", rememberCode: "Memorize this code", rebuildCode: "Rebuild the code", tryAgain: "Try again!", digitsTwoSeconds: "4 digits, 2 seconds", findBug: "Which line contains the bug?", file: "File", convertDecimal: "Convert to decimal", signal: "Signal", predictOutput: "What will the program output?", command: "Command", quickSearch: "Quick search", complexity: "Complexity", suitableStructure: "Suitable structure", sortedArray: "Sorted array of 1,000 elements", nestedLoops: "Two nested loops of size n", lifo: "Last in, first out", linearSearch: "Linear search", binarySearch: "Binary search", fullScan: "Full scan", query: "Build the query", missionNumber: "Mission", showMembers: "Show all members", filterScores: "Filter scores greater than 10", sortScores: "Sort results from highest to lowest", signalAnalysis: "Analyze the signal", inspectTag: "Inspect the tag", compareStructure: "Compare the structure", checkIdentifier: "Check the identifier", corruptedPacket: "Find the only corrupted data packet", nodesConnected: "6 NODES CONNECTED", level: "LEVEL",
+    accessGranted: "ACCESS GRANTED", wellDone: "Well done,", brilliant: "brilliant mind.", unlockedPortfolio: "You have unlocked access", innoverseWorld: "to the Innoverse universe.", enterPortfolio: "ENTER THE PORTFOLIO", discoverTeam: "Meet the team behind Innoverse",
+    backToLanding: "BACK TO HOME", clubIntroTitle: "Ideas come to life", together: "together.", clubDescription: "Innoverse is ENIAD’s innovation club. A student team with complementary talents, brought together to imagine projects and create experiences on campus.", discoverOnLinkedIn: "DISCOVER INNOVERSE ON LINKEDIN", portraits: "PORTRAITS", team: "OF THE TEAM", teamPhotoAlt: "Group photo of the Innoverse team", teamAlbum: "THE INNOVERSE TEAM", members: "MEMBERS", album: "ALBUM", enlargePhoto: "Enlarge photo of", portraitOf: "Portrait of", close: "Close", previousPhoto: "Previous photo", nextPhoto: "Next photo",
+    events: "Events", memories: "MEMORIES", integrationDay: "Orientation day", eventAlbum: "Horizontal album of the orientation day", moving: "IN MOTION", integration: "ORIENTATION DAY", eventPhotoAlt: "Photo from the Innoverse orientation day", workshops: "Workshops", workshopKicker: "LEARN · EXPERIMENT · SHARE", workshopIntro: "We hosted hands-on workshops in UI/UX, web design, web security, Agile, and Git/GitHub, learning together by putting ideas into practice.", workshopAlbum: "Horizontal album of Innoverse workshops", workshopPhotoAlt: "photo from an Innoverse workshop", hackathons: "Hackathons", hackathonKicker: "CHALLENGES · IDEAS · TEAM SPIRIT", hackathonAlbum: "Horizontal album of Innoverse hackathons", eventPhoto: "photo from an Innoverse event", stayConnected: "STAY CONNECTED", joinUs: "Join us", socialLinks: "Innoverse social media", teamFooter: "INNOVERSE TEAM",
+    previous: "Previous", next: "Next", anomalyScanner: "ANOMALY SCANNER", live: "LIVE",
+    gameTitles: { bughunt: "Bug Hunt", binary: "Binary Gate", algorithm: "Algo Flow", sql: "SQL Quest", console: "Console", tictactoe: "Tic-Tac-Toe", memory: "Memory", flashcode: "Code Breaker", sudoku: "Mini Sudoku", oddone: "Odd One Out" },
+    gameSubtitles: { bughunt: "Spot the bug in the code", binary: "Decode the binary signal", algorithm: "Analyze the algorithmic logic", sql: "Query the database", console: "Predict the program output", tictactoe: "Get three in a row", memory: "Find all matching pairs", flashcode: "Memorize four digits", sudoku: "Fill in 1, 2, and 3", oddone: "Find the different shape" },
+    roles: { "Team Leader": "Team Leader", "Vice Team Leader": "Vice Team Leader", "Communication Responsable": "Communications Lead", "Secretary General": "Secretary General", "Event Manager": "Events Manager", "Vice Event Manager": "Deputy Events Manager", "Human Resources": "Human Resources", "Sponsorship Responsable": "Sponsorship Lead", "Vice Sponsorship Responsable": "Deputy Sponsorship Lead", "Project Manager": "Project Manager", "Vice Project Manager": "Deputy Project Manager", "Treasurer": "Treasurer", "Training Manager": "Training Manager", "Media Manager & Graphic Designer": "Media Manager & Graphic Designer", "Consultant": "Consultant" },
+    topics: { "ATELIER INNOVERSE": "INNOVERSE WORKSHOP", "WEB SECURITY": "WEB SECURITY", "DESIGN WEB": "WEB DESIGN", "TRAVAIL EN ÉQUIPE": "TEAMWORK", "AGILITÉ & COLLABORATION": "AGILE & COLLABORATION", "UI / UX DESIGN": "UI / UX DESIGN", "GIT & GITHUB": "GIT & GITHUB" },
+    eventsLabels: { "ENIGMA VERSE": "ENIGMA VERSE", "HACKATHON INNOVERSE": "INNOVERSE HACKATHON", "TECH CONNECT": "TECH CONNECT" },
+  },
+};
+
+const textFor = (language) => messages[language] ?? messages.fr;
+
 const games = [
   { id: "bughunt", number: "01", title: "Bug Hunt", subtitle: "Repère l'erreur dans le code", icon: "grid", tone: "cyan" },
   { id: "binary", number: "02", title: "Binary Gate", subtitle: "Décode le signal binaire", icon: "xo", tone: "violet" },
@@ -37,7 +72,26 @@ function Logo({ compact = false }) {
   );
 }
 
-function Home({ onPlay, onEnterPortfolio, onBackLanding, audience, setAudience, soundEnabled, setSoundEnabled }) {
+function LanguageSelect({ onSelect }) {
+  return (
+    <main className="language-screen">
+      <div className="language-panel">
+        <Logo />
+        <span className="language-kicker">INNOVERSE · ENIAD</span>
+        <h1>Choisis ta langue</h1>
+        <p>Choose your language</p>
+        <div className="language-options">
+          <button onClick={() => onSelect("fr")}><span>FR</span><b>Français</b><i aria-hidden="true">↗</i></button>
+          <button onClick={() => onSelect("en")}><span>EN</span><b>English</b><i aria-hidden="true">↗</i></button>
+        </div>
+      </div>
+      <span className="language-foot">COMMUNITY · CREATIVITY · TECHNOLOGY</span>
+    </main>
+  );
+}
+
+function Home({ lang, onPlay, onEnterPortfolio, onBackLanding, onChangeLanguage, audience, setAudience, soundEnabled, setSoundEnabled }) {
+  const t = textFor(lang);
   const carousel=useRef(null); const [slide,setSlide]=useState(0);
   const visibleGames=audience==="discovery"?beginnerGames:games;
   const go=(index)=>{const next=(index+visibleGames.length)%visibleGames.length;setSlide(next);const el=carousel.current;if(el)el.scrollTo({left:next*el.clientWidth,behavior:"smooth"})};
@@ -45,18 +99,18 @@ function Home({ onPlay, onEnterPortfolio, onBackLanding, audience, setAudience, 
   return (
     <main className="page-shell">
       <div className="orb orb-one" /><div className="orb orb-two" />
-      <header><Logo /><div className="home-actions"><button className="sound" onClick={() => setSoundEnabled(!soundEnabled)} aria-label={soundEnabled ? "Désactiver le son" : "Activer le son"} aria-pressed={soundEnabled}>{soundEnabled ? "⌁" : "×"}</button><button className="home-return" onClick={onBackLanding}>ACCUEIL</button></div></header>
+      <header><Logo /><div className="home-actions"><button className="language-switch" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button><button className="sound" onClick={() => setSoundEnabled(!soundEnabled)} aria-label={soundEnabled ? t.soundOff : t.soundOn} aria-pressed={soundEnabled}>{soundEnabled ? "⌁" : "×"}</button><button className="home-return" onClick={onBackLanding}>{t.home}</button></div></header>
       <section className="hero">
-        <div className="eyebrow"><span /> ACCÈS AU PORTFOLIO</div>
-        <h1>Débloque<br />notre <em>univers.</em></h1>
-        <p>Un esprit curieux mérite une entrée unique.<br />Relève un défi pour accéder à notre monde.</p>
-        <button className="portfolio-entry" onClick={onEnterPortfolio}>ACCÉDER AU PORTFOLIO <span aria-hidden="true">↗</span></button>
-        <div className="game-invitation">OU RELÈVE UN DÉFI POUR DÉCOUVRIR INNOVERSE</div>
+        <div className="eyebrow"><span /> {t.portfolioAccess}</div>
+        <h1>{t.homeTitle}<br /><em>{t.homeTitleEm}</em></h1>
+        <p>{t.homeDescription}<br />{t.homeSubdescription}</p>
+        <button className="portfolio-entry" onClick={onEnterPortfolio}>{t.directPortfolio} <span aria-hidden="true">↗</span></button>
+        <div className="game-invitation">{t.playInvitation}</div>
       </section>
       <section className="game-section">
-        <div className="level-switch" role="group" aria-label="Choisir son parcours"><button className={audience==="discovery"?"active":""} onClick={()=>setAudience("discovery")}><b>Découverte</b><small>Classe prépa</small></button><button className={audience==="engineer"?"active":""} onClick={()=>setAudience("engineer")}><b>Ingénieur</b><small>Cycle ingénieur</small></button></div>
-        <div className="section-head"><span>CHOISIS TON JEU</span><i>Glisse pour explorer</i></div>
-        <div className="challenge-route" aria-hidden="true"><span>START</span><i/><i/><i/><b>PORTFOLIO</b></div>
+        <div className="level-switch" role="group" aria-label={t.chooseGame}><button className={audience==="discovery"?"active":""} onClick={()=>setAudience("discovery")}><b>{t.discovery}</b><small>{t.prepClass}</small></button><button className={audience==="engineer"?"active":""} onClick={()=>setAudience("engineer")}><b>{t.engineer}</b><small>{t.engineeringCycle}</small></button></div>
+        <div className="section-head"><span>{t.chooseGame}</span><i>{t.swipeExplore}</i></div>
+        <div className="challenge-route" aria-hidden="true"><span>{t.start}</span><i/><i/><i/><b>{t.portfolio}</b></div>
         <div className="arcade-console">
           <div className="console-top"><span><i/> INNOVERSE OS</span><b>{String(slide+1).padStart(2,"0")} / 05</b></div>
           <div className="game-list" ref={carousel} onScroll={e=>setSlide(Math.round(e.currentTarget.scrollLeft/e.currentTarget.clientWidth))}>
@@ -64,49 +118,52 @@ function Home({ onPlay, onEnterPortfolio, onBackLanding, audience, setAudience, 
               <button className={`game-card ${game.tone}`} key={game.id} onClick={() => onPlay(game.id)}>
                 <span className="game-number">{String(index+1).padStart(2,"0")}</span>
                 <span className="icon-orbit"><Icon name={game.icon} /></span>
-                <span className="game-copy"><strong>{game.title}</strong><small>{game.subtitle}</small></span>
+                <span className="game-copy"><strong>{t.gameTitles[game.id]}</strong><small>{t.gameSubtitles[game.id]}</small></span>
                 <span className="arrow">↗</span>
-                <span className="play-label">JOUER</span>
-                {index === 0 && <span className="recommended">RECOMMANDÉ</span>}
+                <span className="game-start-label">{t.start}</span>
+                <span className="play-label">{t.play}</span>
+                {index === 0 && <span className="recommended">{t.recommended}</span>}
               </button>
             ))}
           </div>
-          <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label="Jeu précédent">←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label="Jeu suivant">→</button></div>
+          <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label={t.previousGame}>←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label={t.nextGame}>→</button></div>
           <div className="console-speaker" aria-hidden="true"><i/><i/><i/><i/><i/></div>
         </div>
       </section>
-      <footer><span><i /> SYSTÈME PRÊT</span><span>INNOVERSE © 2026</span></footer>
+      <footer><span><i /> {t.systemReady}</span><span>INNOVERSE © 2026</span></footer>
     </main>
   );
 }
 
 const emptyBoard = Array(9).fill(null);
 
-function TicTacToe({ onWin, onFail }) {
+function TicTacToe({ lang, onWin, onFail }) {
+  const t = textFor(lang);
   const [board, setBoard] = useState(emptyBoard);
-  const [status, setStatus] = useState("À toi de jouer");
+  const [status, setStatus] = useState(t.yourTurn);
   const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   const winner = (b) => lines.some(([a,c,d]) => b[a] && b[a] === b[c] && b[a] === b[d]);
   const move = (i) => {
-    if (board[i] || status.includes("gagné")) return;
+    if (board[i] || status === t.youWon) return;
     const next = [...board]; next[i] = "X";
-    if (winner(next)) { setBoard(next); setStatus("Tu as gagné !"); setTimeout(onWin, 650); return; }
+    if (winner(next)) { setBoard(next); setStatus(t.youWon); setTimeout(onWin, 650); return; }
     const free = next.map((v, j) => v ? -1 : j).filter(j => j >= 0);
-    if (!free.length) { setBoard(next); setStatus("Égalité — recommence"); onFail(); return; }
+    if (!free.length) { setBoard(next); setStatus(t.tie); onFail(); return; }
     const winMove = free.find(j => { const test=[...next]; test[j]="O"; return winner(test); });
     const blockMove = free.find(j => { const test=[...next]; test[j]="X"; return winner(test); });
     const bot = winMove ?? blockMove ?? free[Math.floor(Math.random()*free.length)];
     next[bot] = "O"; setBoard(next);
-    if (winner(next)) { setStatus("Presque ! Essaie encore"); onFail(); }
+    if (winner(next)) { setStatus(t.nearly); onFail(); }
   };
-  const reset = () => { setBoard(emptyBoard); setStatus("À toi de jouer"); };
-  useEffect(() => { if (status.includes("Presque") || status.includes("Égalité")) setTimeout(reset, 900); }, [status]);
-  return <><div className="game-status"><b>{status}</b><span>Aligne trois symboles</span></div><div className="tic-board">{board.map((v,i)=><button onClick={()=>move(i)} key={i} className={`tic-cell ${v ? `marked ${v}` : ""}`} aria-label={v ? `Case ${v}` : "Jouer cette case"} disabled={Boolean(v)}><span className={v ? "tic-mark" : ""}>{v}</span></button>)}</div><button className="text-button" onClick={reset}>↻ Recommencer</button></>;
+  const reset = () => { setBoard(emptyBoard); setStatus(t.yourTurn); };
+  useEffect(() => { if (status === t.nearly || status === t.tie) setTimeout(reset, 900); }, [status, t.nearly, t.tie]);
+  return <><div className="game-status"><b>{status}</b><span>{t.align}</span></div><div className="tic-board">{board.map((v,i)=><button onClick={()=>move(i)} key={i} className={`tic-cell ${v ? `marked ${v}` : ""}`} aria-label={v ? `${lang==="fr"?"Case":"Square"} ${v}` : lang==="fr"?"Jouer cette case":"Play this square"} disabled={Boolean(v)}><span className={v ? "tic-mark" : ""}>{v}</span></button>)}</div><button className="text-button" onClick={reset}>↻ {t.playAgain}</button></>;
 }
 
 const sudokuStart = [1,0,3, 0,3,0, 0,0,2];
 const sudokuSolution = [1,2,3, 2,3,1, 3,1,2];
-function Sudoku({ onWin, onFail }) {
+function Sudoku({ lang, onWin, onFail }) {
+  const t = textFor(lang);
   const [board, setBoard] = useState(sudokuStart);
   const [selected, setSelected] = useState(null);
   const [wrong, setWrong] = useState(null);
@@ -116,11 +173,12 @@ function Sudoku({ onWin, onFail }) {
     const next=[...board]; next[selected]=n; setBoard(next);
     if(next.every((v,i)=>v===sudokuSolution[i])) setTimeout(onWin, 500);
   };
-  return <><div className="game-status"><b>Mini Sudoku 3×3</b><span>Chaque ligne contient 1, 2 et 3</span></div><div className="sudoku-board">{board.map((v,i)=><button key={i} className={`${selected===i?"selected":""} ${wrong===i?"wrong":""} ${sudokuStart[i]?"fixed":""}`} onClick={()=>setSelected(i)}>{v || ""}</button>)}</div><div className="number-pad">{[1,2,3].map(n=><button key={n} onClick={()=>place(n)}>{n}</button>)}</div></>;
+  return <><div className="game-status"><b>{t.gameTitles.sudoku} 3×3</b><span>{t.sudokuRules}</span></div><div className="sudoku-board">{board.map((v,i)=><button key={i} className={`${selected===i?"selected":""} ${wrong===i?"wrong":""} ${sudokuStart[i]?"fixed":""}`} onClick={()=>setSelected(i)}>{v || ""}</button>)}</div><div className="number-pad">{[1,2,3].map(n=><button key={n} onClick={()=>place(n)}>{n}</button>)}</div></>;
 }
 
 const symbols = ["</>","{ }","01","#_","</>","{ }","01","#_"];
-function Memory({ onWin, onFail }) {
+function Memory({ lang, onWin, onFail }) {
+  const t = textFor(lang);
   const deck = useMemo(() => [...symbols].sort(()=>Math.random()-.5), []);
   const [open,setOpen]=useState([]); const [done,setDone]=useState([]);
   const flip=(i)=>{
@@ -128,15 +186,16 @@ function Memory({ onWin, onFail }) {
     const next=[...open,i]; setOpen(next);
     if(next.length===2) setTimeout(()=>{ if(deck[next[0]]===deck[next[1]]) { const matched=[...done,...next]; setDone(matched); if(matched.length===8)setTimeout(onWin,400); } else onFail(); setOpen([]); },550);
   };
-  return <><div className="game-status"><b>Connecte les paires</b><span>{done.length/2} / 4 retrouvées</span></div><div className="memory-board">{deck.map((s,i)=><button key={i} onClick={()=>flip(i)} className={open.includes(i)||done.includes(i)?"flipped":""}><span>{s}</span></button>)}</div></>;
+  return <><div className="game-status"><b>{t.pairs}</b><span>{done.length/2} / 4 {t.pairsFound}</span></div><div className="memory-board">{deck.map((s,i)=><button key={i} onClick={()=>flip(i)} className={open.includes(i)||done.includes(i)?"flipped":""}><span>{s}</span></button>)}</div></>;
 }
 
-function FlashCode({ onWin, onFail }) {
+function FlashCode({ lang, onWin, onFail }) {
+  const t = textFor(lang);
   const makeCode = () => Array.from({length:4},()=>Math.floor(Math.random()*9)+1);
-  const [code,setCode]=useState(makeCode); const [visible,setVisible]=useState(true); const [answer,setAnswer]=useState([]); const [message,setMessage]=useState("Mémorise ce code");
-  useEffect(()=>{const timer=setTimeout(()=>{setVisible(false);setMessage("Recompose le code")},2200);return()=>clearTimeout(timer)},[code]);
-  const press=(n)=>{if(visible||answer.length===4)return;const next=[...answer,n];setAnswer(next);if(next.length===4){if(next.join("")===code.join(""))setTimeout(onWin,450);else {onFail();setTimeout(()=>{setCode(makeCode());setAnswer([]);setVisible(true);setMessage("Encore une fois !")},650)}}};
-  return <><div className="game-status"><b>{message}</b><span>4 chiffres, 2 secondes</span></div><div className={`flash-display ${visible?"visible":""}`}>{visible?code.map((n,i)=><span key={i}>{n}</span>):[0,1,2,3].map((_,i)=><span key={i}>{answer[i]??"·"}</span>)}</div><div className="flash-pad">{[1,2,3,4,5,6,7,8,9].map(n=><button key={n} onClick={()=>press(n)}>{n}</button>)}</div></>;
+  const [code,setCode]=useState(makeCode); const [visible,setVisible]=useState(true); const [answer,setAnswer]=useState([]); const [message,setMessage]=useState(t.rememberCode);
+  useEffect(()=>{const timer=setTimeout(()=>{setVisible(false);setMessage(t.rebuildCode)},2200);return()=>clearTimeout(timer)},[code,lang]);
+  const press=(n)=>{if(visible||answer.length===4)return;const next=[...answer,n];setAnswer(next);if(next.length===4){if(next.join("")===code.join(""))setTimeout(onWin,450);else {onFail();setTimeout(()=>{setCode(makeCode());setAnswer([]);setVisible(true);setMessage(t.tryAgain)},650)}}};
+  return <><div className="game-status"><b>{message}</b><span>{t.digitsTwoSeconds}</span></div><div className={`flash-display ${visible?"visible":""}`}>{visible?code.map((n,i)=><span key={i}>{n}</span>):[0,1,2,3].map((_,i)=><span key={i}>{answer[i]??"·"}</span>)}</div><div className="flash-pad">{[1,2,3,4,5,6,7,8,9].map(n=><button key={n} onClick={()=>press(n)}>{n}</button>)}</div></>;
 }
 
 const bugRounds=[
@@ -144,30 +203,30 @@ const bugRounds=[
   {code:["let score = 10;","score += 5;","console.log(scores);"],bug:2},
   {code:["if (ready) {","  launch();","// accolade manquante"],bug:2}
 ];
-function BugHunt({onWin,onFail}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=i=>{if(i!==bugRounds[round].bug){setMiss(i);onFail();setTimeout(()=>setMiss(null),400);return}if(round===2)setTimeout(onWin,400);else setRound(round+1)};return <><div className="game-status"><b>Quel ligne contient le bug ?</b><span>Fichier {round+1} / 3</span></div><div className="code-window"><div><i/><i/><i/><span>main.js</span></div>{bugRounds[round].code.map((line,i)=><button className={miss===i?"line-miss":""} onClick={()=>pick(i)} key={line}><b>{i+1}</b><code>{line}</code></button>)}</div></>}
+function BugHunt({lang,onWin,onFail}){const t=textFor(lang);const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=i=>{if(i!==bugRounds[round].bug){setMiss(i);onFail();setTimeout(()=>setMiss(null),400);return}if(round===2)setTimeout(onWin,400);else setRound(round+1)};const code=bugRounds[round].code.map(line=>line==="// accolade manquante"&&lang==="en"?"// missing closing brace":line);return <><div className="game-status"><b>{t.findBug}</b><span>{t.file} {round+1} / 3</span></div><div className="code-window"><div><i/><i/><i/><span>main.js</span></div>{code.map((line,i)=><button className={miss===i?"line-miss":""} onClick={()=>pick(i)} key={line}><b>{i+1}</b><code>{line}</code></button>)}</div></>}
 
-function BinaryGate({onWin,onFail}){const rounds=[{bits:"0101",value:5},{bits:"1001",value:9},{bits:"1110",value:14}];const[round,setRound]=useState(0);const[miss,setMiss]=useState(false);const choose=n=>{if(n!==rounds[round].value){setMiss(true);onFail();setTimeout(()=>setMiss(false),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};const answers=[rounds[round].value,rounds[round].value+2,Math.max(0,rounds[round].value-3)].sort((a,b)=>a-b);return <><div className="game-status"><b>Convertis en décimal</b><span>Signal {round+1} / 3</span></div><div className={`binary-signal ${miss?"miss":""}`}>{rounds[round].bits.split("").map((b,i)=><span key={i}>{b}</span>)}</div><div className="binary-options">{answers.map(n=><button onClick={()=>choose(n)} key={n}>{n}</button>)}</div></>}
+function BinaryGate({lang,onWin,onFail}){const t=textFor(lang);const rounds=[{bits:"0101",value:5},{bits:"1001",value:9},{bits:"1110",value:14}];const[round,setRound]=useState(0);const[miss,setMiss]=useState(false);const choose=n=>{if(n!==rounds[round].value){setMiss(true);onFail();setTimeout(()=>setMiss(false),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};const answers=[rounds[round].value,rounds[round].value+2,Math.max(0,rounds[round].value-3)].sort((a,b)=>a-b);return <><div className="game-status"><b>{t.convertDecimal}</b><span>{t.signal} {round+1} / 3</span></div><div className={`binary-signal ${miss?"miss":""}`}>{rounds[round].bits.split("").map((b,i)=><span key={i}>{b}</span>)}</div><div className="binary-options">{answers.map(n=><button onClick={()=>choose(n)} key={n}>{n}</button>)}</div></>}
 
 const consoleRounds=[
   {code:"console.log(2 + 3 * 2)",answers:[10,8,7],correct:8},
   {code:"'code'.length",answers:[3,4,5],correct:4},
   {code:"Boolean(0)",answers:["true","false","null"],correct:"false"}
 ];
-function ConsoleGame({onWin,onFail}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==consoleRounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};return <><div className="game-status"><b>Que va afficher le programme ?</b><span>Commande {round+1} / 3</span></div><div className="console-box"><span>innoverse@lab:~$</span><code>{consoleRounds[round].code}</code><i>_</i></div><div className="console-options">{consoleRounds[round].answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}>{String(a)}</button>)}</div></>}
+function ConsoleGame({lang,onWin,onFail}){const t=textFor(lang);const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==consoleRounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};return <><div className="game-status"><b>{t.predictOutput}</b><span>{t.command} {round+1} / 3</span></div><div className="console-box"><span>innoverse@lab:~$</span><code>{consoleRounds[round].code}</code><i>_</i></div><div className="console-options">{consoleRounds[round].answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}>{String(a)}</button>)}</div></>}
 
 const algoRounds=[
   {title:"Recherche rapide",code:"Tableau trié de 1 000 éléments",answers:["Recherche linéaire","Recherche binaire","Parcours complet"],correct:"Recherche binaire"},
   {title:"Complexité",code:"Deux boucles imbriquées de taille n",answers:["O(n)","O(log n)","O(n²)"],correct:"O(n²)"},
   {title:"Structure adaptée",code:"Dernier élément entré, premier sorti",answers:["File","Pile","Arbre"],correct:"Pile"}
 ];
-function AlgorithmGame({onWin,onFail}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==algoRounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),400);return}if(round===algoRounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const q=algoRounds[round];return <><div className="game-status"><b>{q.title}</b><span>Analyse {round+1} / {algoRounds.length}</span></div><div className="tech-terminal"><span>ALGORITHM.INPUT</span><code>{q.code}</code><i>Choisis la solution optimale</i></div><div className="tech-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>OPTION</small><b>{a}</b></button>)}</div></>}
+function AlgorithmGame({lang,onWin,onFail}){const t=textFor(lang);const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==rounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),400);return}if(round===rounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const rounds=[{title:t.quickSearch,code:t.sortedArray,answers:[t.linearSearch,t.binarySearch,t.fullScan],correct:t.binarySearch},{title:t.complexity,code:t.nestedLoops,answers:["O(n)","O(log n)","O(n²)"],correct:"O(n²)"},{title:t.suitableStructure,code:t.lifo,answers:[lang==="fr"?"File":"Queue",lang==="fr"?"Pile":"Stack",lang==="fr"?"Arbre":"Tree"],correct:lang==="fr"?"Pile":"Stack"}];const q=rounds[round];return <><div className="game-status"><b>{q.title}</b><span>{lang==="fr"?"Analyse":"Analysis"} {round+1} / {rounds.length}</span></div><div className="tech-terminal"><span>ALGORITHM.INPUT</span><code>{q.code}</code><i>{lang==="fr"?"Choisis la solution optimale":"Choose the optimal solution"}</i></div><div className="tech-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>{lang==="fr"?"OPTION":"OPTION"}</small><b>{a}</b></button>)}</div></>}
 
 const sqlRounds=[
   {goal:"Afficher tous les membres",answers:["SELECT * FROM membres;","GET membres ALL;","SHOW * membres;"],correct:"SELECT * FROM membres;"},
   {goal:"Filtrer les scores supérieurs à 10",answers:["WHERE score > 10","FILTER score > 10","IF score > 10"],correct:"WHERE score > 10"},
   {goal:"Trier les résultats du plus grand au plus petit",answers:["ORDER BY score DESC","SORT score DOWN","GROUP BY score"],correct:"ORDER BY score DESC"}
 ];
-function SQLGame({onWin,onFail}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==sqlRounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),400);return}if(round===sqlRounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const q=sqlRounds[round];return <><div className="game-status"><b>Construis la requête</b><span>Mission {round+1} / {sqlRounds.length}</span></div><div className="database-visual"><div className="db-disc"/><span>INNOVERSE_DB</span><b>{q.goal}</b></div><div className="tech-options sql-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>QUERY</small><code>{a}</code></button>)}</div></>}
+function SQLGame({lang,onWin,onFail}){const t=textFor(lang);const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const table=lang==="fr"?"membres":"members";const rounds=[{goal:t.showMembers,answers:[`SELECT * FROM ${table};`,`GET ${table} ALL;`,`SHOW * ${table};`],correct:`SELECT * FROM ${table};`},{goal:t.filterScores,answers:["WHERE score > 10","FILTER score > 10","IF score > 10"],correct:"WHERE score > 10"},{goal:t.sortScores,answers:["ORDER BY score DESC","SORT score DOWN","GROUP BY score"],correct:"ORDER BY score DESC"}];const pick=a=>{if(a!==rounds[round].correct){setMiss(a);onFail();setTimeout(()=>setMiss(null),400);return}if(round===rounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const q=rounds[round];return <><div className="game-status"><b>{t.query}</b><span>{t.missionNumber} {round+1} / {rounds.length}</span></div><div className="database-visual"><div className="db-disc"/><span>INNOVERSE_DB</span><b>{q.goal}</b></div><div className="tech-options sql-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>QUERY</small><code>{a}</code></button>)}</div></>}
 
 const advancedOdd=[
   {label:"Analyse le signal",top:"SIGNAL",normal:["1011","0110"],odd:["1011","0101"]},
@@ -175,9 +234,10 @@ const advancedOdd=[
   {label:"Compare la structure",top:"LOGIC",normal:["{ [ (", ") ] }"],odd:["{ [ )","( ] } "]},
   {label:"Vérifie l'identifiant",top:"HASH",normal:["#6A5F","E09C"],odd:["#6A5E","F09C"]}
 ];
-function OddOne({onWin,onFail}){const[round,setRound]=useState(0);const[pos,setPos]=useState(()=>Math.floor(Math.random()*6));const[miss,setMiss]=useState(null);const choose=i=>{if(i!==pos){setMiss(i);onFail();setTimeout(()=>setMiss(null),420);return}if(round===advancedOdd.length-1)setTimeout(onWin,450);else{setRound(round+1);setPos(Math.floor(Math.random()*6));setMiss(null)}};const data=advancedOdd[round];return <><div className="game-status adult-status"><b>{data.label}</b><span>Détecte le seul paquet de données corrompu</span></div><div className="anomaly-console"><div className="scan-line"/><div className="anomaly-head"><span><i/> ANOMALY SCANNER</span><b>LIVE · 0{round+1}</b></div><div className="focus-meter"><i style={{width:`${(round+1)/advancedOdd.length*100}%`}}/></div><div className="packet-grid">{Array.from({length:6}).map((_,i)=>{const value=i===pos?data.odd:data.normal;return <button className={miss===i?"wrong-pick":""} onClick={()=>choose(i)} key={i}><span className="packet-top"><small>0{i+1}</small><i>{data.top}</i></span><code><b>{value[0]}</b><b>{value[1]}</b></code><span className="packet-bars"><i/><i/><i/></span></button>})}</div><div className="scan-footer"><span>6 NODES CONNECTÉS</span><span>NIVEAU {round+1}/{advancedOdd.length}</span></div></div></>}
+function OddOne({lang,onWin,onFail}){const t=textFor(lang);const[round,setRound]=useState(0);const[pos,setPos]=useState(()=>Math.floor(Math.random()*6));const[miss,setMiss]=useState(null);const choose=i=>{if(i!==pos){setMiss(i);onFail();setTimeout(()=>setMiss(null),420);return}if(round===advancedOdd.length-1)setTimeout(onWin,450);else{setRound(round+1);setPos(Math.floor(Math.random()*6));setMiss(null)}};const labels=lang==="fr"?[t.signalAnalysis,t.inspectTag,t.compareStructure,t.checkIdentifier]:["Analyze the signal","Inspect the tag","Compare the structure","Check the identifier"];const data=advancedOdd[round];return <><div className="game-status adult-status"><b>{labels[round]}</b><span>{t.corruptedPacket}</span></div><div className="anomaly-console"><div className="scan-line"/><div className="anomaly-head"><span><i/> {t.anomalyScanner}</span><b>{t.live} · 0{round+1}</b></div><div className="focus-meter"><i style={{width:`${(round+1)/advancedOdd.length*100}%`}}/></div><div className="packet-grid">{Array.from({length:6}).map((_,i)=>{const value=i===pos?data.odd:data.normal;return <button className={miss===i?"wrong-pick":""} onClick={()=>choose(i)} key={i}><span className="packet-top"><small>0{i+1}</small><i>{data.top}</i></span><code><b>{value[0]}</b><b>{value[1]}</b></code><span className="packet-bars"><i/><i/><i/></span></button>})}</div><div className="scan-footer"><span>{t.nodesConnected}</span><span>{t.level} {round+1}/{advancedOdd.length}</span></div></div></>}
 
-function GameScreen({ gameId, onBack, onWin, soundEnabled }) {
+function GameScreen({ gameId, lang, onBack, onWin, soundEnabled }) {
+  const t = textFor(lang);
   const audioContextRef = useRef(null);
   const game=allGames.find(g=>g.id===gameId);
   const getAudioContext = () => {
@@ -212,11 +272,12 @@ function GameScreen({ gameId, onBack, onWin, soundEnabled }) {
   const handleWin = () => { playSound("win"); onWin(); };
   const handleFail = () => playSound("fail");
   const unlockAudio = () => { if (soundEnabled) getAudioContext(); };
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone" onPointerDownCapture={unlockAudio} onKeyDownCapture={unlockAudio}>{gameId==="bughunt"&&<BugHunt onWin={handleWin} onFail={handleFail}/>} {gameId==="binary"&&<BinaryGate onWin={handleWin} onFail={handleFail}/>} {gameId==="algorithm"&&<AlgorithmGame onWin={handleWin} onFail={handleFail}/>} {gameId==="sql"&&<SQLGame onWin={handleWin} onFail={handleFail}/>} {gameId==="console"&&<ConsoleGame onWin={handleWin} onFail={handleFail}/>} {gameId==="memory"&&<Memory onWin={handleWin} onFail={handleFail}/>} {gameId==="flashcode"&&<FlashCode onWin={handleWin} onFail={handleFail}/>} {gameId==="tictactoe"&&<TicTacToe onWin={handleWin} onFail={handleFail}/>} {gameId==="sudoku"&&<Sudoku onWin={handleWin} onFail={handleFail}/>} {gameId==="oddone"&&<OddOne onWin={handleWin} onFail={handleFail}/>}</section></main>;
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack} aria-label={t.home}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> {t.mission}</div><h2>{t.gameTitles[gameId]}</h2><p>{t.gameSubtitles[gameId]}</p></section><section className="game-zone" onPointerDownCapture={unlockAudio} onKeyDownCapture={unlockAudio}>{gameId==="bughunt"&&<BugHunt lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="binary"&&<BinaryGate lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="algorithm"&&<AlgorithmGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sql"&&<SQLGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="console"&&<ConsoleGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="memory"&&<Memory lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="flashcode"&&<FlashCode lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="tictactoe"&&<TicTacToe lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sudoku"&&<Sudoku lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="oddone"&&<OddOne lang={lang} onWin={handleWin} onFail={handleFail}/>}</section></main>;
 }
 
-function Victory({ onEnter }) {
-  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> ACCÈS AUTORISÉ</div><h2>Bien joué,<br/><em>esprit brillant.</em></h2><p>Tu viens de débloquer l'accès<br/>à l'univers Innoverse.</p><button onClick={onEnter}>ENTRER DANS LE PORTFOLIO <span>→</span></button><small>Découvre l'équipe derrière Innoverse</small></div>;
+function Victory({ lang, onEnter }) {
+  const t = textFor(lang);
+  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> {t.accessGranted}</div><h2>{t.wellDone}<br/><em>{t.brilliant}</em></h2><p>{t.unlockedPortfolio}<br/>{t.innoverseWorld}</p><button onClick={onEnter}>{t.enterPortfolio} <span>→</span></button><small>{t.discoverTeam}</small></div>;
 }
 
 const members = [
@@ -275,41 +336,44 @@ const hackathonMemories = [
   { photo: require("../images/1769461821962.jpg").default, event: "TECH CONNECT" },
 ];
 
-function Landing({ onEnterPortfolio, onExploreGames }) {
+function Landing({ lang, onEnterPortfolio, onExploreGames, onChangeLanguage }) {
+  const t = textFor(lang);
   return (
     <main className="landing-page">
       <header className="landing-nav">
         <Logo />
-        <nav aria-label="Navigation principale">
+        <nav aria-label={t.navLabel}>
           <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
           <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <button className="landing-language" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button>
         </nav>
       </header>
       <section className="landing-hero">
-        <Image className="landing-team-image" src={teamPhoto} alt="Les membres du club Innoverse ENIAD réunis" fill priority sizes="100vw" />
+        <Image className="landing-team-image" src={teamPhoto} alt={t.teamPhotoAlt} fill priority sizes="100vw" />
         <div className="landing-shade" />
         <div className="landing-content">
-          <div className="landing-kicker"><i /> CLUB D’INNOVATION · ENIAD</div>
+          <div className="landing-kicker"><i /> {t.clubKicker}</div>
           <h1>Innoverse</h1>
-          <p>Les idées prennent vie quand on les construit ensemble. Découvre une communauté qui imagine, apprend et crée autour de la technologie.</p>
+          <p>{t.landingDescription}</p>
           <div className="landing-actions">
-            <button className="landing-primary" onClick={onEnterPortfolio}>DÉCOUVRIR LE CLUB <span aria-hidden="true">↗</span></button>
-            <button className="landing-secondary" onClick={onExploreGames}>EXPLORER LES JEUX <span aria-hidden="true">→</span></button>
+            <button className="landing-primary" onClick={onEnterPortfolio}>{t.discoverClub} <span aria-hidden="true">↗</span></button>
+            <button className="landing-secondary" onClick={onExploreGames}>{t.exploreGames} <span aria-hidden="true">→</span></button>
           </div>
         </div>
-        <div className="landing-photo-caption">INNOVERSE · ENIAD <span>COMMUNAUTÉ · CRÉATIVITÉ · TECHNOLOGIE</span></div>
+        <div className="landing-photo-caption">INNOVERSE · ENIAD <span>{t.community}</span></div>
       </section>
-      <section className="landing-signals" aria-label="Univers Innoverse">
-        <span><b>01</b> APPRENDRE ENSEMBLE</span>
-        <span><b>02</b> CRÉER DES PROJETS</span>
-        <span><b>03</b> PARTAGER DES IDÉES</span>
-        <button onClick={onEnterPortfolio}>RENCONTRER LE CLUB <span aria-hidden="true">↗</span></button>
+      <section className="landing-signals" aria-label={t.navLabel}>
+        <span><b>01</b> {t.learnTogether}</span>
+        <span><b>02</b> {t.createProjects}</span>
+        <span><b>03</b> {t.shareIdeas}</span>
+        <button onClick={onEnterPortfolio}>{t.meetClub} <span aria-hidden="true">↗</span></button>
       </section>
     </main>
   );
 }
 
-function Portfolio({ onBack }) {
+function Portfolio({ lang, onBack, onChangeLanguage }) {
+  const t = textFor(lang);
   const [activeIndex, setActiveIndex] = useState(null);
   const activeMember = activeIndex === null ? null : members[activeIndex];
 
@@ -324,27 +388,27 @@ function Portfolio({ onBack }) {
 
   return (
     <main className="portfolio">
-      <nav className="portfolio-nav"><Logo/><button onClick={onBack}>RETOUR AUX JEUX</button></nav>
+      <nav className="portfolio-nav"><Logo/><div className="portfolio-nav-actions"><button className="language-switch" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button><button onClick={onBack}>{t.backToLanding}</button></div></nav>
       <section className="club-intro">
         <div className="club-copy">
-          <div className="portfolio-kicker"><i/> CLUB D’INNOVATION · ENIAD</div>
-          <h1>Les idées prennent vie <em>ensemble.</em></h1>
-          <p>Innoverse est le club d’innovation de l’ENIAD. Une équipe étudiante aux talents complémentaires, réunie pour imaginer des projets et créer des expériences sur le campus.</p>
-          <a className="linkedin-link" href="https://www.linkedin.com/company/innoverseeniad/posts/" target="_blank" rel="noreferrer">DÉCOUVRIR INNOVERSE SUR LINKEDIN <span>↗</span></a>
-          <div className="club-count"><b>15</b><span>PORTRAITS<br/>DE L’ÉQUIPE</span></div>
+          <div className="portfolio-kicker"><i/> {t.clubKicker}</div>
+          <h1>{t.clubIntroTitle} <em>{t.together}</em></h1>
+          <p>{t.clubDescription}</p>
+          <a className="linkedin-link" href="https://www.linkedin.com/company/innoverseeniad/posts/" target="_blank" rel="noreferrer">{t.discoverOnLinkedIn} <span>↗</span></a>
+          <div className="club-count"><b>15</b><span>{t.portraits}<br/>{t.team}</span></div>
         </div>
         <figure className="team-photo">
-          <Image src={teamPhoto} alt="Photo de groupe de l’équipe Innoverse" width={800} height={800} priority sizes="(max-width: 760px) 100vw, 48vw" />
+          <Image src={teamPhoto} alt={t.teamPhotoAlt} width={800} height={800} priority sizes="(max-width: 760px) 100vw, 48vw" />
           <figcaption>INNOVERSE · ENIAD</figcaption>
         </figure>
       </section>
       <section className="team-section album-section">
-        <div className="team-heading"><span>L’ÉQUIPE INNOVERSE</span><small>15 MEMBRES · 01 ALBUM</small></div>
+        <div className="team-heading"><span>{t.teamAlbum}</span><small>15 {t.members} · 01 {t.album}</small></div>
         <div className="member-album">
           {members.map((member, index) => (
-            <button className="album-item" key={member.name} onClick={() => setActiveIndex(index)} aria-label={`Agrandir la photo de ${member.name}`}>
-              <span className="album-photo"><Image src={member.photo} alt={`Portrait de ${member.name}, ${member.role}`} width={800} height={1067} sizes="(max-width: 620px) 50vw, (max-width: 980px) 33vw, 25vw" /></span>
-              <span className="album-caption"><b>{member.name}</b><small>{member.role}</small></span>
+            <button className="album-item" key={member.name} onClick={() => setActiveIndex(index)} aria-label={`${t.enlargePhoto} ${member.name}`}>
+              <span className="album-photo"><Image src={member.photo} alt={`${t.portraitOf} ${member.name}, ${t.roles[member.role] ?? member.role}`} width={800} height={1067} sizes="(max-width: 620px) 50vw, (max-width: 980px) 33vw, 25vw" /></span>
+              <span className="album-caption"><b>{member.name}</b><small>{t.roles[member.role] ?? member.role}</small></span>
               <span className="album-zoom" aria-hidden="true">↗</span>
             </button>
           ))}
@@ -352,51 +416,51 @@ function Portfolio({ onBack }) {
       </section>
       <section className="events-section" aria-labelledby="events-title">
         <div className="events-heading">
-          <div><span className="events-kicker">INNOVERSE · SUR LE TERRAIN</span><h2 id="events-title">Events</h2></div>
-          <small>10 SOUVENIRS · OCT. 2025</small>
+          <div><span className="events-kicker">INNOVERSE · {lang === "fr" ? "SUR LE TERRAIN" : "IN ACTION"}</span><h2 id="events-title">{t.events}</h2></div>
+          <small>10 {t.memories} · OCT. 2025</small>
         </div>
         <section className="event-subsection" aria-labelledby="integration-title">
-          <h3 id="integration-title">Journée d’intégration</h3>
-        <div className="event-album" aria-label="Album horizontal de la journée d’intégration">
+          <h3 id="integration-title">{t.integrationDay}</h3>
+        <div className="event-album" aria-label={t.eventAlbum}>
           {eventMemories.map((memory, index) => (
             <figure className={`event-memory ${memory.type}`} key={memory.type === "video" ? memory.src : memory.photo.src}>
               {memory.type === "video" ? (
-                <video controls playsInline preload="metadata" poster={memory.poster} aria-label={`Vidéo souvenir ${index + 1} de la journée d’intégration`}>
+                <video controls playsInline preload="metadata" poster={memory.poster} aria-label={`${t.moving} ${index + 1}`}>
                   <source src={memory.src} type="video/mp4" />
                 </video>
               ) : (
-                <Image src={memory.photo} alt={`Photo ${index + 1} de la journée d’intégration Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 75vw, 300px" />
+                <Image src={memory.photo} alt={`${t.eventPhoto} ${index + 1}`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 75vw, 300px" />
               )}
-              <figcaption><span>{memory.type === "video" ? "EN MOUVEMENT" : "JOURNÉE D’INTÉGRATION"}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+              <figcaption><span>{memory.type === "video" ? t.moving : t.integration}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
             </figure>
           ))}
         </div>
         </section>
         <section className="event-subsection workshop-subsection" aria-labelledby="workshops-title">
           <div className="workshop-intro">
-            <span className="events-kicker">APPRENDRE · EXPÉRIMENTER · PARTAGER</span>
-            <h3 id="workshops-title">Workshops</h3>
-            <p>Nous avons organisé des ateliers pratiques autour de l’UI/UX, du design web, de la sécurité web, de l’Agile et de Git/GitHub pour apprendre ensemble en passant à l’action.</p>
+            <span className="events-kicker">{t.workshopKicker}</span>
+            <h3 id="workshops-title">{t.workshops}</h3>
+            <p>{t.workshopIntro}</p>
           </div>
-          <div className="event-album workshop-album" aria-label="Album horizontal des workshops Innoverse">
+          <div className="event-album workshop-album" aria-label={t.workshopAlbum}>
             {workshopMemories.map((memory, index) => (
               <figure className="event-memory workshop-memory" key={memory.photo.src ?? memory.photo}>
-                <Image src={memory.photo} alt={`${memory.topic} : photo d’un workshop Innoverse`} width={memory.width ?? memory.photo.width} height={memory.height ?? memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
-                <figcaption><span>{memory.topic}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+                <Image src={memory.photo} alt={`${t.topics[memory.topic] ?? memory.topic}: ${t.workshopPhotoAlt}`} width={memory.width ?? memory.photo.width} height={memory.height ?? memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
+                <figcaption><span>{t.topics[memory.topic] ?? memory.topic}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
               </figure>
             ))}
           </div>
         </section>
         <section className="event-subsection workshop-subsection hackathon-subsection" aria-labelledby="hackathons-title">
           <div className="workshop-intro">
-            <span className="events-kicker">DÉFIS · IDÉES · ESPRIT D’ÉQUIPE</span>
-            <h3 id="hackathons-title">Hackathons</h3>
+            <span className="events-kicker">{t.hackathonKicker}</span>
+            <h3 id="hackathons-title">{t.hackathons}</h3>
           </div>
-          <div className="event-album workshop-album" aria-label="Album horizontal des hackathons Innoverse">
+          <div className="event-album workshop-album" aria-label={t.hackathonAlbum}>
             {hackathonMemories.map((memory, index) => (
               <figure className="event-memory workshop-memory" key={memory.photo.src}>
-                <Image src={memory.photo} alt={`${memory.event} : photo d’un événement Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
-                <figcaption><span>{memory.event}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+                <Image src={memory.photo} alt={`${t.eventsLabels[memory.event] ?? memory.event}: ${t.eventPhoto}`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
+                <figcaption><span>{t.eventsLabels[memory.event] ?? memory.event}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
               </figure>
             ))}
           </div>
@@ -404,24 +468,24 @@ function Portfolio({ onBack }) {
       </section>
       <section className="join-us" aria-labelledby="join-us-title">
         <div>
-          <span className="events-kicker">RESTONS CONNECTÉS</span>
-          <h2 id="join-us-title">Join us<span>.</span></h2>
+          <span className="events-kicker">{t.stayConnected}</span>
+          <h2 id="join-us-title">{t.joinUs}<span>.</span></h2>
         </div>
-        <nav aria-label="Réseaux sociaux Innoverse">
+        <nav aria-label={t.socialLinks}>
           <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
           <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
         </nav>
       </section>
-      <footer><span><i/> INNOVERSE TEAM</span><span>ENIAD</span></footer>
+      <footer><span><i/> {t.teamFooter}</span><span>ENIAD</span></footer>
       {activeMember && (
-        <div className="photo-viewer" role="dialog" aria-modal="true" aria-label={`Portrait de ${activeMember.name}`} onClick={() => setActiveIndex(null)}>
-          <button className="viewer-close" onClick={() => setActiveIndex(null)} aria-label="Fermer">×</button>
-          <button className="viewer-step viewer-prev" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + members.length - 1) % members.length); }} aria-label="Photo précédente">←</button>
+        <div className="photo-viewer" role="dialog" aria-modal="true" aria-label={`${t.portraitOf} ${activeMember.name}`} onClick={() => setActiveIndex(null)}>
+          <button className="viewer-close" onClick={() => setActiveIndex(null)} aria-label={t.close}>×</button>
+          <button className="viewer-step viewer-prev" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + members.length - 1) % members.length); }} aria-label={t.previousPhoto}>←</button>
           <figure onClick={(event) => event.stopPropagation()}>
-            <Image src={activeMember.photo} alt={`Portrait de ${activeMember.name}, ${activeMember.role}`} width={800} height={1067} sizes="90vw" />
-            <figcaption><b>{activeMember.name}</b><span>{activeMember.role}</span></figcaption>
+            <Image src={activeMember.photo} alt={`${t.portraitOf} ${activeMember.name}, ${t.roles[activeMember.role] ?? activeMember.role}`} width={800} height={1067} sizes="90vw" />
+            <figcaption><b>{activeMember.name}</b><span>{t.roles[activeMember.role] ?? activeMember.role}</span></figcaption>
           </figure>
-          <button className="viewer-step viewer-next" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + 1) % members.length); }} aria-label="Photo suivante">→</button>
+          <button className="viewer-step viewer-next" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + 1) % members.length); }} aria-label={t.nextPhoto}>→</button>
         </div>
       )}
     </main>
@@ -429,10 +493,14 @@ function Portfolio({ onBack }) {
 }
 
 export default function Page() {
-  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
-  if(portfolio) return <Portfolio onBack={()=>{setPortfolio(false);setWon(false);setGame(null);setShowGames(false)}}/>;
-  if(won) return <Victory onEnter={()=>setPortfolio(true)}/>;
-  if(game) return <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)} soundEnabled={soundEnabled}/>;
-  if(showGames) return <Home onPlay={setGame} onEnterPortfolio={()=>setPortfolio(true)} onBackLanding={()=>setShowGames(false)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
-  return <Landing onEnterPortfolio={()=>setPortfolio(true)} onExploreGames={()=>setShowGames(true)}/>;
+  const [language,setLanguage]=useState(null); const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
+  useEffect(()=>{const saved=window.localStorage.getItem("innoverse-language");if(saved==="fr"||saved==="en")setLanguage(saved)},[]);
+  useEffect(()=>{if(language)document.documentElement.lang=language},[language]);
+  const selectLanguage=(nextLanguage)=>{window.localStorage.setItem("innoverse-language",nextLanguage);setLanguage(nextLanguage)};
+  if(!language) return <LanguageSelect onSelect={selectLanguage}/>;
+  if(portfolio) return <Portfolio lang={language} onChangeLanguage={()=>setLanguage(null)} onBack={()=>{setPortfolio(false);setWon(false);setGame(null);setShowGames(false)}}/>;
+  if(won) return <Victory lang={language} onEnter={()=>setPortfolio(true)}/>;
+  if(game) return <GameScreen gameId={game} lang={language} onBack={()=>setGame(null)} onWin={()=>setWon(true)} soundEnabled={soundEnabled}/>;
+  if(showGames) return <Home lang={language} onPlay={setGame} onEnterPortfolio={()=>setPortfolio(true)} onBackLanding={()=>setShowGames(false)} onChangeLanguage={()=>setLanguage(null)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
+  return <Landing lang={language} onChangeLanguage={()=>setLanguage(null)} onEnterPortfolio={()=>setPortfolio(true)} onExploreGames={()=>setShowGames(true)}/>;
 }

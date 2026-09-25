@@ -8,6 +8,8 @@
 .hero .portfolio-entry span{font-size:17px}
 .hero .portfolio-entry:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
 .game-invitation{margin-top:25px;color:#7d86a0;font:700 7px "Space Grotesk";letter-spacing:1.3px}
+.arcade-console .game-card:before{content:none}
+.game-start-label{position:absolute;top:18px;right:18px;padding:7px 10px;border:1px solid rgba(255,255,255,.45);border-radius:14px;background:rgba(11,18,59,.2);color:#fff;font:700 7px "Space Grotesk";letter-spacing:1px;backdrop-filter:blur(8px)}
 .game-zone{width:100%;margin-top:24px;padding:26px 12px 30px;min-height:430px;justify-content:center}
 .game-status{margin-bottom:20px}
 .game-status b{font-size:19px}
@@ -68,6 +70,23 @@
 @media(prefers-reduced-motion:reduce){.tic-board .tic-mark{animation:none}}
 
 /* Innoverse landing page: brand-first, with the team as the first visual. */
+.language-screen{min-height:100svh;position:relative;display:grid;place-items:center;overflow:hidden;padding:28px 18px;background:radial-gradient(ellipse at 12% 12%,rgba(45,217,235,.18),transparent 32%),radial-gradient(ellipse at 92% 88%,rgba(255,105,86,.15),transparent 30%),linear-gradient(145deg,#f8fbff,#edf2f9 60%,#fff6f1);color:#15213c}
+.language-screen:before{content:"";position:absolute;width:min(78vw,720px);aspect-ratio:1;border:1px solid rgba(65,89,151,.1);border-radius:50%;box-shadow:0 0 0 55px rgba(65,89,151,.025),0 0 0 115px rgba(65,89,151,.02);pointer-events:none}
+.language-panel{width:min(100%,440px);position:relative;display:flex;flex-direction:column;align-items:center;padding:42px 34px 36px;border:1px solid rgba(50,67,116,.12);border-radius:18px;background:rgba(255,255,255,.76);box-shadow:0 28px 80px rgba(42,57,104,.13);backdrop-filter:blur(16px);text-align:center;animation:landing-copy-in .45s ease-out both}
+.language-panel>.brand{margin-bottom:45px;text-align:left}
+.language-kicker{color:#7884a1;font:700 8px "Space Grotesk";letter-spacing:2px}
+.language-panel h1{margin:12px 0 4px;color:#17213c;font:600 29px/1.2 "Space Grotesk";letter-spacing:0}
+.language-panel>p{margin:0;color:#75809b;font-size:12px}
+.language-options{width:100%;display:grid;gap:10px;margin-top:26px}
+.language-options button{min-height:62px;display:grid;grid-template-columns:38px 1fr 24px;align-items:center;gap:14px;padding:0 16px;border:1px solid rgba(46,62,111,.14);border-radius:10px;background:#fff;color:#1e2a49;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.language-options button:hover{transform:translateY(-2px);border-color:rgba(49,116,168,.4);box-shadow:0 9px 22px rgba(44,65,119,.1)}
+.language-options button>span{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#eef3fa;color:#38527a;font:700 10px "Space Grotesk"}
+.language-options button>b{font:600 14px "Space Grotesk"}
+.language-options button>i{color:#e86b55;font-style:normal;font-size:17px;text-align:right}
+.language-options button:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
+.language-foot{position:absolute;bottom:20px;color:#8791a8;font:700 7px "Space Grotesk";letter-spacing:1.7px}
+.landing-language,.language-switch{min-width:34px;height:34px;padding:0 9px;border:1px solid rgba(40,55,97,.15);border-radius:8px;background:rgba(255,255,255,.76);color:#354668;font:700 9px "Space Grotesk";cursor:pointer}
+.portfolio-nav-actions{display:flex;align-items:center;gap:9px}
 .landing-page{min-height:100svh;padding:22px clamp(18px,5vw,72px) 24px;background:linear-gradient(145deg,#f8fbff,#edf2f9 58%,#fff5f0);color:#15213c}
 .landing-nav{width:min(100%,1440px);min-height:50px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:2}
 .landing-nav nav{display:flex;align-items:center;gap:24px}
@@ -104,6 +123,9 @@
   .landing-nav .brand-mark{width:36px;height:36px}
   .landing-nav nav{gap:14px}
   .landing-nav nav a{font-size:9px}
+  .landing-language{min-width:30px;height:30px;padding:0 7px}
+  .language-panel{padding:34px 22px 27px}
+  .language-panel>.brand{margin-bottom:34px}
   .landing-hero{height:70svh;min-height:520px;max-height:720px;margin-top:14px}
   .landing-team-image{object-position:55% center}
   .landing-shade{background:linear-gradient(0deg,rgba(10,19,40,.88),rgba(10,19,40,.5) 52%,rgba(10,19,40,.06))}
