@@ -5,8 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const games = [
   { id: "bughunt", number: "01", title: "Bug Hunt", subtitle: "Repère l'erreur dans le code", icon: "grid", tone: "cyan" },
   { id: "binary", number: "02", title: "Binary Gate", subtitle: "Décode le signal binaire", icon: "xo", tone: "violet" },
-  { id: "memory", number: "03", title: "Cache Match", subtitle: "Connecte les symboles du web", icon: "cards", tone: "blue" },
-  { id: "flashcode", number: "04", title: "Access Key", subtitle: "Mémorise la clé système", icon: "pulse", tone: "coral" },
+  { id: "algorithm", number: "03", title: "Algo Flow", subtitle: "Analyse la logique algorithmique", icon: "cards", tone: "blue" },
+  { id: "sql", number: "04", title: "SQL Quest", subtitle: "Interroge la base de données", icon: "pulse", tone: "coral" },
   { id: "console", number: "05", title: "Console", subtitle: "Prédit la sortie du programme", icon: "odd", tone: "lime" },
 ];
 
@@ -152,6 +152,20 @@ const consoleRounds=[
 ];
 function ConsoleGame({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==consoleRounds[round].correct){setMiss(a);setTimeout(()=>setMiss(null),350);return}if(round===2)setTimeout(onWin,350);else setRound(round+1)};return <><div className="game-status"><b>Que va afficher le programme ?</b><span>Commande {round+1} / 3</span></div><div className="console-box"><span>innoverse@lab:~$</span><code>{consoleRounds[round].code}</code><i>_</i></div><div className="console-options">{consoleRounds[round].answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}>{String(a)}</button>)}</div></>}
 
+const algoRounds=[
+  {title:"Recherche rapide",code:"Tableau trié de 1 000 éléments",answers:["Recherche linéaire","Recherche binaire","Parcours complet"],correct:"Recherche binaire"},
+  {title:"Complexité",code:"Deux boucles imbriquées de taille n",answers:["O(n)","O(log n)","O(n²)"],correct:"O(n²)"},
+  {title:"Structure adaptée",code:"Dernier élément entré, premier sorti",answers:["File","Pile","Arbre"],correct:"Pile"}
+];
+function AlgorithmGame({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==algoRounds[round].correct){setMiss(a);setTimeout(()=>setMiss(null),400);return}if(round===algoRounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const q=algoRounds[round];return <><div className="game-status"><b>{q.title}</b><span>Analyse {round+1} / {algoRounds.length}</span></div><div className="tech-terminal"><span>ALGORITHM.INPUT</span><code>{q.code}</code><i>Choisis la solution optimale</i></div><div className="tech-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>OPTION</small><b>{a}</b></button>)}</div></>}
+
+const sqlRounds=[
+  {goal:"Afficher tous les membres",answers:["SELECT * FROM membres;","GET membres ALL;","SHOW * membres;"],correct:"SELECT * FROM membres;"},
+  {goal:"Filtrer les scores supérieurs à 10",answers:["WHERE score > 10","FILTER score > 10","IF score > 10"],correct:"WHERE score > 10"},
+  {goal:"Trier les résultats du plus grand au plus petit",answers:["ORDER BY score DESC","SORT score DOWN","GROUP BY score"],correct:"ORDER BY score DESC"}
+];
+function SQLGame({onWin}){const[round,setRound]=useState(0);const[miss,setMiss]=useState(null);const pick=a=>{if(a!==sqlRounds[round].correct){setMiss(a);setTimeout(()=>setMiss(null),400);return}if(round===sqlRounds.length-1)setTimeout(onWin,400);else setRound(round+1)};const q=sqlRounds[round];return <><div className="game-status"><b>Construis la requête</b><span>Mission {round+1} / {sqlRounds.length}</span></div><div className="database-visual"><div className="db-disc"/><span>INNOVERSE_DB</span><b>{q.goal}</b></div><div className="tech-options sql-options">{q.answers.map(a=><button className={miss===a?"miss":""} onClick={()=>pick(a)} key={a}><small>QUERY</small><code>{a}</code></button>)}</div></>}
+
 const advancedOdd=[
   {label:"Analyse le signal",top:"SIGNAL",normal:["1011","0110"],odd:["1011","0101"]},
   {label:"Inspecte la balise",top:"HTML",normal:["<section>","</section>"],odd:["<section>","<section/> "]},
@@ -162,7 +176,7 @@ function OddOne({onWin}){const[round,setRound]=useState(0);const[pos,setPos]=use
 
 function GameScreen({ gameId, onBack, onWin }) {
   const game=allGames.find(g=>g.id===gameId);
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>} {gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="algorithm"&&<AlgorithmGame onWin={onWin}/>} {gameId==="sql"&&<SQLGame onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
 }
 
 function Victory({ onClose }) {
