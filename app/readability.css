@@ -176,6 +176,13 @@
 .event-memory.video video{object-fit:cover}
 .event-memory.video figcaption{bottom:58px}
 .event-memory.video video::-webkit-media-controls-panel{background:rgba(17,24,54,.72)}
+.join-us{position:relative;z-index:1;margin-top:30px;padding:24px 0 18px;border-top:1px solid rgba(37,52,93,.14);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.join-us h2{margin:5px 0 0;color:#17213c;font:600 30px "Space Grotesk";line-height:1.1;letter-spacing:0}
+.join-us h2 span{color:#ff725d}
+.join-us nav{display:flex;gap:10px;flex-wrap:wrap}
+.join-us nav a{display:inline-flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid rgba(37,52,93,.15);border-radius:8px;background:rgba(255,255,255,.72);color:#27334e;text-decoration:none;font:600 10px "Space Grotesk";transition:background .18s,transform .18s}
+.join-us nav a:hover{background:#fff;transform:translateY(-2px)}
+.join-us nav a span{color:#536dfe;font-size:15px}
 @media(max-width:620px){
   .member-album,.event-album{gap:12px;scroll-padding:8px;padding:8px 2px 16px}
   .member-album>.album-item{flex-basis:68vw;max-width:250px}
@@ -187,6 +194,9 @@
   .workshop-subsection{margin-top:21px;padding-top:21px}
   .workshop-intro h3{font-size:22px}
   .workshop-intro p{font-size:12px;line-height:1.65}
+  .join-us{align-items:flex-start;flex-direction:column;gap:15px;margin-top:22px}
+  .join-us nav{width:100%}
+  .join-us nav a{flex:1;justify-content:space-between}
   .event-album{gap:15px;padding-bottom:20px}
   .event-memory{flex-basis:76vw;max-width:290px;aspect-ratio:.92}
 }

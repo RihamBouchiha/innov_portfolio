@@ -220,12 +220,24 @@ const eventMemories = [
 const workshopMemories = [
   { photo: require("../images/10.png").default, topic: "ATELIER INNOVERSE" },
   { photo: require("../images/1742991207384.jpg").default, topic: "ATELIER INNOVERSE" },
-  { photo: require("../images/2.png").default, topic: "WEB SECURITY" },
+  { photo: "/workshops/web-security.jpg", width: 1800, height: 2400, topic: "WEB SECURITY" },
   { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.14_cb47e00f.jpg").default, topic: "DESIGN WEB" },
   { photo: require("../images/WhatsApp Image 2025-09-13 à 21.44.24_ce62310d.jpg").default, topic: "TRAVAIL EN ÉQUIPE" },
   { photo: require("../images/WhatsApp Image 2025-09-14 à 19.04.53_2ac08bb5.jpg").default, topic: "AGILITÉ & COLLABORATION" },
   { photo: require("../images/Our third workshop was all about UI-UX design! ✨🖌️ Members gathered to explore the principles .webp").default, topic: "UI / UX DESIGN" },
   { photo: require("../images/🚀 Mastering Version Control with Git & GitHub! 🔥At InnoVerse, we believe in empowering our me (1).webp").default, topic: "GIT & GITHUB" },
+];
+
+const hackathonMemories = [
+  { photo: require("../images/1777049694173.jpg").default, event: "ENIGMA VERSE" },
+  { photo: require("../images/1777049625993.jpg").default, event: "ENIGMA VERSE" },
+  { photo: require("../images/1776789193003.jpg").default, event: "HACKATHON INNOVERSE" },
+  { photo: require("../images/1776789191858.jpg").default, event: "ENIGMA VERSE" },
+  { photo: require("../images/1769462268158 (1).jpg").default, event: "TECH CONNECT" },
+  { photo: require("../images/1769462269192.jpg").default, event: "TECH CONNECT" },
+  { photo: require("../images/1769462268866.jpg").default, event: "TECH CONNECT" },
+  { photo: require("../images/1769462268158.jpg").default, event: "TECH CONNECT" },
+  { photo: require("../images/1769461821962.jpg").default, event: "TECH CONNECT" },
 ];
 
 function Portfolio({ onBack }) {
@@ -299,13 +311,37 @@ function Portfolio({ onBack }) {
           </div>
           <div className="event-album workshop-album" aria-label="Album horizontal des workshops Innoverse">
             {workshopMemories.map((memory, index) => (
-              <figure className="event-memory workshop-memory" key={memory.photo.src}>
-                <Image src={memory.photo} alt={`${memory.topic} : photo d’un workshop Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
+              <figure className="event-memory workshop-memory" key={memory.photo.src ?? memory.photo}>
+                <Image src={memory.photo} alt={`${memory.topic} : photo d’un workshop Innoverse`} width={memory.width ?? memory.photo.width} height={memory.height ?? memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
                 <figcaption><span>{memory.topic}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
               </figure>
             ))}
           </div>
         </section>
+        <section className="event-subsection workshop-subsection hackathon-subsection" aria-labelledby="hackathons-title">
+          <div className="workshop-intro">
+            <span className="events-kicker">DÉFIS · IDÉES · ESPRIT D’ÉQUIPE</span>
+            <h3 id="hackathons-title">Hackathons</h3>
+          </div>
+          <div className="event-album workshop-album" aria-label="Album horizontal des hackathons Innoverse">
+            {hackathonMemories.map((memory, index) => (
+              <figure className="event-memory workshop-memory" key={memory.photo.src}>
+                <Image src={memory.photo} alt={`${memory.event} : photo d’un événement Innoverse`} width={memory.photo.width} height={memory.photo.height} sizes="(max-width: 620px) 76vw, 300px" />
+                <figcaption><span>{memory.event}</span><b>{String(index + 1).padStart(2, "0")}</b></figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      </section>
+      <section className="join-us" aria-labelledby="join-us-title">
+        <div>
+          <span className="events-kicker">RESTONS CONNECTÉS</span>
+          <h2 id="join-us-title">Join us<span>.</span></h2>
+        </div>
+        <nav aria-label="Réseaux sociaux Innoverse">
+          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+        </nav>
       </section>
       <footer><span><i/> INNOVERSE TEAM</span><span>ENIAD</span></footer>
       {activeMember && (
