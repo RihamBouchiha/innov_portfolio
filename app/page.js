@@ -179,12 +179,22 @@ function GameScreen({ gameId, onBack, onWin }) {
   return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> MISSION EN COURS</div><h2>{game.title}</h2><p>{game.subtitle}</p></section><section className="game-zone">{gameId==="bughunt"&&<BugHunt onWin={onWin}/>} {gameId==="binary"&&<BinaryGate onWin={onWin}/>} {gameId==="algorithm"&&<AlgorithmGame onWin={onWin}/>} {gameId==="sql"&&<SQLGame onWin={onWin}/>} {gameId==="console"&&<ConsoleGame onWin={onWin}/>} {gameId==="memory"&&<Memory onWin={onWin}/>} {gameId==="flashcode"&&<FlashCode onWin={onWin}/>} {gameId==="tictactoe"&&<TicTacToe onWin={onWin}/>} {gameId==="sudoku"&&<Sudoku onWin={onWin}/>} {gameId==="oddone"&&<OddOne onWin={onWin}/>}</section></main>;
 }
 
-function Victory({ onClose }) {
-  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> ACCÈS AUTORISÉ</div><h2>Bien joué,<br/><em>esprit brillant.</em></h2><p>Tu viens de débloquer l'accès<br/>à l'univers Innoverse.</p><button onClick={onClose}>ENTRER DANS LE PORTFOLIO <span>→</span></button><small>Le portfolio arrive dans la prochaine étape</small></div>;
+function Victory({ onEnter }) {
+  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> ACCÈS AUTORISÉ</div><h2>Bien joué,<br/><em>esprit brillant.</em></h2><p>Tu viens de débloquer l'accès<br/>à l'univers Innoverse.</p><button onClick={onEnter}>ENTRER DANS LE PORTFOLIO <span>→</span></button><small>Découvre l'équipe derrière Innoverse</small></div>;
+}
+
+const firstMembers=[
+  {name:"Fahim Mariam",role:"Team Leader",initials:"FM",quote:"Leadership is action, not position.",tone:"leader"},
+  {name:"Ferhan Abdelali",role:"Vice Team Leader",initials:"FA",quote:"Quiet energy, loud results.",tone:"vice"},
+  {name:"Bouchikha Riham",role:"Responsable Communication",initials:"BR",quote:"Words that build trust open doors.",tone:"communication"}
+];
+function Portfolio({onBack}){
+  return <main className="portfolio"><nav><Logo/><button onClick={onBack}>RETOUR AUX JEUX</button></nav><section className="portfolio-hero"><div className="portfolio-kicker"><i/> PORTFOLIO DÉBLOQUÉ</div><h1>Les esprits derrière<br/><em>Innoverse.</em></h1><p>Une équipe, plusieurs talents, une vision commune : transformer les idées en expériences.</p><div className="portfolio-stats"><span><b>15</b>MEMBRES</span><span><b>01</b>VISION</span><span><b>∞</b>IDÉES</span></div></section><section className="team-section"><div className="team-heading"><span>CORE TEAM</span><small>01 — LEADERSHIP</small></div><div className="member-stack">{firstMembers.map((member,index)=><article className={`member-card ${member.tone}`} key={member.name}><div className="member-photo"><div className="member-placeholder">{member.initials}</div><span>PHOTO À AJOUTER</span></div><div className="member-index">0{index+1}</div><div className="member-info"><small>{member.role}</small><h2>{member.name}</h2><p>“{member.quote}”</p></div></article>)}</div></section><footer><span><i/> INNOVERSE TEAM</span><span>2026</span></footer></main>
 }
 
 export default function Page() {
-  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [audience,setAudience]=useState("discovery");
-  if(won) return <Victory onClose={()=>{setWon(false);setGame(null)}}/>;
+  const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [audience,setAudience]=useState("discovery");
+  if(portfolio) return <Portfolio onBack={()=>{setPortfolio(false);setWon(false);setGame(null)}}/>;
+  if(won) return <Victory onEnter={()=>setPortfolio(true)}/>;
   return game ? <GameScreen gameId={game} onBack={()=>setGame(null)} onWin={()=>setWon(true)}/> : <Home onPlay={setGame} audience={audience} setAudience={setAudience}/>;
 }
