@@ -508,7 +508,7 @@ export default function Page() {
   const navigate=(view,update)=>{window.history.pushState({...window.history.state,innoverse:true,view},"",window.location.href);update()};
   if(!language) return <LanguageSelect onSelect={selectLanguage}/>;
   if(portfolio) return <Portfolio lang={language} onChangeLanguage={()=>setLanguage(null)} onBack={goHome}/>;
-  if(won) return <Victory lang={language} onEnter={()=>navigate("portfolio",()=>setPortfolio(true))}/>;
+  if(won) return <Victory lang={language} onEnter={()=>navigate("portfolio",()=>{setWon(false);setPortfolio(true)})}/>;
   if(game) return <GameScreen gameId={game} lang={language} onBack={goHome} onWin={()=>navigate("victory",()=>setWon(true))} soundEnabled={soundEnabled}/>;
   if(showGames) return <Home lang={language} onPlay={(gameId)=>navigate("game",()=>setGame(gameId))} onEnterPortfolio={()=>navigate("portfolio",()=>setPortfolio(true))} onBackLanding={goHome} onChangeLanguage={()=>setLanguage(null)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
   return <Landing lang={language} onChangeLanguage={()=>setLanguage(null)} onEnterPortfolio={()=>navigate("portfolio",()=>setPortfolio(true))} onExploreGames={()=>navigate("games",()=>setShowGames(true))}/>;

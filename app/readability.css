@@ -309,10 +309,11 @@
 
 /* Clear touch targets for return and carousel navigation. */
 .home-return,.portfolio-home{min-height:42px;padding:0 16px;border:0;border-radius:999px;background:linear-gradient(110deg,#1d315f,#4556b5);box-shadow:0 8px 20px rgba(48,65,139,.2);color:#fff;font:700 9px "Space Grotesk";letter-spacing:.7px;white-space:nowrap;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.victory-rays{pointer-events:none}
 .home-return:hover,.portfolio-home:hover{transform:translateY(-1px);box-shadow:0 11px 24px rgba(48,65,139,.27)}
 .home-return:focus-visible,.portfolio-home:focus-visible,.play-shell .back:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
 .portfolio-nav-actions{gap:8px}
-.portfolio-nav .portfolio-home{padding:0 16px;border-radius:999px;color:#fff;font-size:9px;letter-spacing:.7px}
+.portfolio .portfolio-nav-actions .portfolio-home{min-height:42px;padding:0 16px;border:0;border-radius:999px;background:linear-gradient(110deg,#1d315f,#4556b5);box-shadow:0 8px 20px rgba(48,65,139,.2);color:#fff;font:700 9px "Space Grotesk";letter-spacing:.7px}
 .play-shell .back{width:auto;min-height:40px;padding:0 13px;border-radius:999px;color:#27334e;font:700 8px "Space Grotesk";letter-spacing:.4px;white-space:nowrap}
 .carousel-controls{justify-content:center!important;gap:3px}
 .carousel-controls>button,.arcade-console .carousel-controls>button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:none;color:inherit;cursor:pointer}
