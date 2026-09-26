@@ -78,11 +78,10 @@
 .language-panel h1{margin:12px 0 4px;color:#17213c;font:600 29px/1.2 "Space Grotesk";letter-spacing:0}
 .language-panel>p{margin:0;color:#75809b;font-size:12px}
 .language-options{width:100%;display:grid;gap:10px;margin-top:26px}
-.language-options button{min-height:62px;display:grid;grid-template-columns:38px 1fr 24px;align-items:center;gap:14px;padding:0 16px;border:1px solid rgba(46,62,111,.14);border-radius:10px;background:#fff;color:#1e2a49;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
+.language-options button{min-height:62px;display:grid;grid-template-columns:38px 1fr;align-items:center;gap:14px;padding:0 16px;border:1px solid rgba(46,62,111,.14);border-radius:10px;background:#fff;color:#1e2a49;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
 .language-options button:hover{transform:translateY(-2px);border-color:rgba(49,116,168,.4);box-shadow:0 9px 22px rgba(44,65,119,.1)}
 .language-options button>span{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#eef3fa;color:#38527a;font:700 10px "Space Grotesk"}
 .language-options button>b{font:600 14px "Space Grotesk"}
-.language-options button>i{color:#e86b55;font-style:normal;font-size:17px;text-align:right}
 .language-options button:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
 .language-foot{position:absolute;bottom:20px;color:#8791a8;font:700 7px "Space Grotesk";letter-spacing:1.7px}
 .landing-language,.language-switch{min-width:34px;height:34px;padding:0 9px;border:1px solid rgba(40,55,97,.15);border-radius:8px;background:rgba(255,255,255,.76);color:#354668;font:700 9px "Space Grotesk";cursor:pointer}
@@ -307,3 +306,19 @@
   .event-album{gap:15px;padding-bottom:20px}
   .event-memory{flex-basis:76vw;max-width:290px;aspect-ratio:.92}
 }
+
+/* Clear touch targets for return and carousel navigation. */
+.home-return,.portfolio-home{min-height:42px;padding:0 16px;border:0;border-radius:999px;background:linear-gradient(110deg,#1d315f,#4556b5);box-shadow:0 8px 20px rgba(48,65,139,.2);color:#fff;font:700 9px "Space Grotesk";letter-spacing:.7px;white-space:nowrap;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.home-return:hover,.portfolio-home:hover{transform:translateY(-1px);box-shadow:0 11px 24px rgba(48,65,139,.27)}
+.home-return:focus-visible,.portfolio-home:focus-visible,.play-shell .back:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
+.portfolio-nav-actions{gap:8px}
+.portfolio-nav .portfolio-home{padding:0 16px;border-radius:999px;color:#fff;font-size:9px;letter-spacing:.7px}
+.play-shell .back{width:auto;min-height:40px;padding:0 13px;border-radius:999px;color:#27334e;font:700 8px "Space Grotesk";letter-spacing:.4px;white-space:nowrap}
+.carousel-controls{justify-content:center!important;gap:3px}
+.carousel-controls>button,.arcade-console .carousel-controls>button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;box-shadow:none;color:inherit;cursor:pointer}
+.carousel-controls>button i,.arcade-console .carousel-controls>button i{display:block;width:7px;height:7px;border-radius:999px;background:#aab2c9;transition:width .2s,background .2s}
+.carousel-controls>button[aria-pressed="true"] i,.arcade-console .carousel-controls>button[aria-pressed="true"] i{width:22px;background:#5969f5}
+.carousel-controls>button:focus-visible{outline:2px solid #5969f5;outline-offset:1px}
+.photo-viewer{grid-template-columns:minmax(58px,auto) minmax(0,1fr) minmax(58px,auto)}
+.photo-viewer button.viewer-step{width:auto;min-width:52px;height:38px;padding:0 8px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:0;white-space:nowrap}
+@media(max-width:620px){.portfolio-nav{align-items:flex-start;gap:12px;flex-wrap:wrap}.portfolio-nav-actions{margin-left:auto;max-width:100%;gap:7px}.portfolio-nav .portfolio-home{min-height:40px;padding:0 11px;font-size:8px}.portfolio-nav .language-switch{flex:none}.play-shell .back{max-width:44vw;overflow:hidden;text-overflow:ellipsis}.photo-viewer{grid-template-columns:minmax(52px,auto) minmax(0,1fr) minmax(52px,auto)}}

@@ -81,8 +81,8 @@ function LanguageSelect({ onSelect }) {
         <h1>Choisis ta langue</h1>
         <p>Choose your language</p>
         <div className="language-options">
-          <button onClick={() => onSelect("fr")}><span>FR</span><b>Français</b><i aria-hidden="true">↗</i></button>
-          <button onClick={() => onSelect("en")}><span>EN</span><b>English</b><i aria-hidden="true">↗</i></button>
+          <button onClick={() => onSelect("fr")}><span>FR</span><b>Français</b></button>
+          <button onClick={() => onSelect("en")}><span>EN</span><b>English</b></button>
         </div>
       </div>
       <span className="language-foot">COMMUNITY · CREATIVITY · TECHNOLOGY</span>
@@ -104,7 +104,7 @@ function Home({ lang, onPlay, onEnterPortfolio, onBackLanding, onChangeLanguage,
         <div className="eyebrow"><span /> {t.portfolioAccess}</div>
         <h1>{t.homeTitle}<br /><em>{t.homeTitleEm}</em></h1>
         <p>{t.homeDescription}<br />{t.homeSubdescription}</p>
-        <button className="portfolio-entry" onClick={onEnterPortfolio}>{t.directPortfolio} <span aria-hidden="true">↗</span></button>
+        <button className="portfolio-entry" onClick={onEnterPortfolio}>{t.directPortfolio}</button>
         <div className="game-invitation">{t.playInvitation}</div>
       </section>
       <section className="game-section">
@@ -119,14 +119,13 @@ function Home({ lang, onPlay, onEnterPortfolio, onBackLanding, onChangeLanguage,
                 <span className="game-number">{String(index+1).padStart(2,"0")}</span>
                 <span className="icon-orbit"><Icon name={game.icon} /></span>
                 <span className="game-copy"><strong>{t.gameTitles[game.id]}</strong><small>{t.gameSubtitles[game.id]}</small></span>
-                <span className="arrow">↗</span>
                 <span className="game-start-label">{t.start}</span>
                 <span className="play-label">{t.play}</span>
                 {index === 0 && <span className="recommended">{t.recommended}</span>}
               </button>
             ))}
           </div>
-          <div className="carousel-controls"><button onClick={()=>go(slide-1)} aria-label={t.previousGame}>←</button><div>{visibleGames.map((_,i)=><i className={i===slide?"active":""} key={i}/>)}</div><button onClick={()=>go(slide+1)} aria-label={t.nextGame}>→</button></div>
+          <div className="carousel-controls">{visibleGames.map((game,index)=><button onClick={()=>go(index)} aria-label={`${t.chooseGame} : ${t.gameTitles[game.id]}`} aria-pressed={index===slide} key={game.id}><i aria-hidden="true" className={index===slide?"active":""}/></button>)}</div>
           <div className="console-speaker" aria-hidden="true"><i/><i/><i/><i/><i/></div>
         </div>
       </section>
@@ -157,7 +156,7 @@ function TicTacToe({ lang, onWin, onFail }) {
   };
   const reset = () => { setBoard(emptyBoard); setStatus(t.yourTurn); };
   useEffect(() => { if (status === t.nearly || status === t.tie) setTimeout(reset, 900); }, [status, t.nearly, t.tie]);
-  return <><div className="game-status"><b>{status}</b><span>{t.align}</span></div><div className="tic-board">{board.map((v,i)=><button onClick={()=>move(i)} key={i} className={`tic-cell ${v ? `marked ${v}` : ""}`} aria-label={v ? `${lang==="fr"?"Case":"Square"} ${v}` : lang==="fr"?"Jouer cette case":"Play this square"} disabled={Boolean(v)}><span className={v ? "tic-mark" : ""}>{v}</span></button>)}</div><button className="text-button" onClick={reset}>↻ {t.playAgain}</button></>;
+  return <><div className="game-status"><b>{status}</b><span>{t.align}</span></div><div className="tic-board">{board.map((v,i)=><button onClick={()=>move(i)} key={i} className={`tic-cell ${v ? `marked ${v}` : ""}`} aria-label={v ? `${lang==="fr"?"Case":"Square"} ${v}` : lang==="fr"?"Jouer cette case":"Play this square"} disabled={Boolean(v)}><span className={v ? "tic-mark" : ""}>{v}</span></button>)}</div><button className="text-button" onClick={reset}>{t.playAgain}</button></>;
 }
 
 const sudokuStart = [1,0,3, 0,3,0, 0,0,2];
@@ -272,12 +271,12 @@ function GameScreen({ gameId, lang, onBack, onWin, soundEnabled }) {
   const handleWin = () => { playSound("win"); onWin(); };
   const handleFail = () => playSound("fail");
   const unlockAudio = () => { if (soundEnabled) getAudioContext(); };
-  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack} aria-label={t.home}>←</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> {t.mission}</div><h2>{t.gameTitles[gameId]}</h2><p>{t.gameSubtitles[gameId]}</p></section><section className="game-zone" onPointerDownCapture={unlockAudio} onKeyDownCapture={unlockAudio}>{gameId==="bughunt"&&<BugHunt lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="binary"&&<BinaryGate lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="algorithm"&&<AlgorithmGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sql"&&<SQLGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="console"&&<ConsoleGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="memory"&&<Memory lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="flashcode"&&<FlashCode lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="tictactoe"&&<TicTacToe lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sudoku"&&<Sudoku lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="oddone"&&<OddOne lang={lang} onWin={handleWin} onFail={handleFail}/>}</section></main>;
+  return <main className="play-shell"><div className="orb orb-three"/><header><button className="back" onClick={onBack}>{t.backToLanding}</button><Logo compact/><span className="counter">{game.number}/05</span></header><section className="play-intro"><div className="eyebrow"><span/> {t.mission}</div><h2>{t.gameTitles[gameId]}</h2><p>{t.gameSubtitles[gameId]}</p></section><section className="game-zone" onPointerDownCapture={unlockAudio} onKeyDownCapture={unlockAudio}>{gameId==="bughunt"&&<BugHunt lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="binary"&&<BinaryGate lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="algorithm"&&<AlgorithmGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sql"&&<SQLGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="console"&&<ConsoleGame lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="memory"&&<Memory lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="flashcode"&&<FlashCode lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="tictactoe"&&<TicTacToe lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="sudoku"&&<Sudoku lang={lang} onWin={handleWin} onFail={handleFail}/>} {gameId==="oddone"&&<OddOne lang={lang} onWin={handleWin} onFail={handleFail}/>}</section></main>;
 }
 
 function Victory({ lang, onEnter }) {
   const t = textFor(lang);
-  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> {t.accessGranted}</div><h2>{t.wellDone}<br/><em>{t.brilliant}</em></h2><p>{t.unlockedPortfolio}<br/>{t.innoverseWorld}</p><button onClick={onEnter}>{t.enterPortfolio} <span>→</span></button><small>{t.discoverTeam}</small></div>;
+  return <div className="victory"><div className="victory-rays"/><div className="victory-mark">✓</div><div className="eyebrow"><span/> {t.accessGranted}</div><h2>{t.wellDone}<br/><em>{t.brilliant}</em></h2><p>{t.unlockedPortfolio}<br/>{t.innoverseWorld}</p><button onClick={onEnter}>{t.enterPortfolio}</button><small>{t.discoverTeam}</small></div>;
 }
 
 const members = [
@@ -343,8 +342,8 @@ function Landing({ lang, onEnterPortfolio, onExploreGames, onChangeLanguage }) {
       <header className="landing-nav">
         <Logo />
         <nav aria-label={t.navLabel}>
-          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn</a>
           <button className="landing-language" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button>
         </nav>
       </header>
@@ -356,8 +355,8 @@ function Landing({ lang, onEnterPortfolio, onExploreGames, onChangeLanguage }) {
           <h1>Innoverse</h1>
           <p>{t.landingDescription}</p>
           <div className="landing-actions">
-            <button className="landing-primary" onClick={onEnterPortfolio}>{t.discoverClub} <span aria-hidden="true">↗</span></button>
-            <button className="landing-secondary" onClick={onExploreGames}>{t.exploreGames} <span aria-hidden="true">→</span></button>
+            <button className="landing-primary" onClick={onEnterPortfolio}>{t.discoverClub}</button>
+            <button className="landing-secondary" onClick={onExploreGames}>{t.exploreGames}</button>
           </div>
         </div>
         <div className="landing-photo-caption">INNOVERSE · ENIAD <span>{t.community}</span></div>
@@ -366,7 +365,7 @@ function Landing({ lang, onEnterPortfolio, onExploreGames, onChangeLanguage }) {
         <span><b>01</b> {t.learnTogether}</span>
         <span><b>02</b> {t.createProjects}</span>
         <span><b>03</b> {t.shareIdeas}</span>
-        <button onClick={onEnterPortfolio}>{t.meetClub} <span aria-hidden="true">↗</span></button>
+        <button onClick={onEnterPortfolio}>{t.meetClub}</button>
       </section>
     </main>
   );
@@ -388,13 +387,13 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
 
   return (
     <main className="portfolio">
-      <nav className="portfolio-nav"><Logo/><div className="portfolio-nav-actions"><button className="language-switch" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button><button onClick={onBack}>{t.backToLanding}</button></div></nav>
+      <nav className="portfolio-nav"><Logo/><div className="portfolio-nav-actions"><button className="language-switch" onClick={onChangeLanguage} aria-label={t.changeLanguage}>{lang.toUpperCase()}</button><button className="portfolio-home" onClick={onBack}>{t.backToLanding}</button></div></nav>
       <section className="club-intro">
         <div className="club-copy">
           <div className="portfolio-kicker"><i/> {t.clubKicker}</div>
           <h1>{t.clubIntroTitle} <em>{t.together}</em></h1>
           <p>{t.clubDescription}</p>
-          <a className="linkedin-link" href="https://www.linkedin.com/company/innoverseeniad/posts/" target="_blank" rel="noreferrer">{t.discoverOnLinkedIn} <span>↗</span></a>
+          <a className="linkedin-link" href="https://www.linkedin.com/company/innoverseeniad/posts/" target="_blank" rel="noreferrer">{t.discoverOnLinkedIn}</a>
           <div className="club-count"><b>15</b><span>{t.portraits}<br/>{t.team}</span></div>
         </div>
         <figure className="team-photo">
@@ -409,7 +408,6 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
             <button className="album-item" key={member.name} onClick={() => setActiveIndex(index)} aria-label={`${t.enlargePhoto} ${member.name}`}>
               <span className="album-photo"><Image src={member.photo} alt={`${t.portraitOf} ${member.name}, ${t.roles[member.role] ?? member.role}`} width={800} height={1067} sizes="(max-width: 620px) 50vw, (max-width: 980px) 33vw, 25vw" /></span>
               <span className="album-caption"><b>{member.name}</b><small>{t.roles[member.role] ?? member.role}</small></span>
-              <span className="album-zoom" aria-hidden="true">↗</span>
             </button>
           ))}
         </div>
@@ -472,20 +470,20 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
           <h2 id="join-us-title">{t.joinUs}<span>.</span></h2>
         </div>
         <nav aria-label={t.socialLinks}>
-          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/innoverse.eniad?stkn=eXp2cGk2dTk2M3Fy" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.linkedin.com/in/innoverse-eniad-club/" target="_blank" rel="noreferrer">LinkedIn</a>
         </nav>
       </section>
       <footer><span><i/> {t.teamFooter}</span><span>ENIAD</span></footer>
       {activeMember && (
         <div className="photo-viewer" role="dialog" aria-modal="true" aria-label={`${t.portraitOf} ${activeMember.name}`} onClick={() => setActiveIndex(null)}>
           <button className="viewer-close" onClick={() => setActiveIndex(null)} aria-label={t.close}>×</button>
-          <button className="viewer-step viewer-prev" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + members.length - 1) % members.length); }} aria-label={t.previousPhoto}>←</button>
+          <button className="viewer-step viewer-prev" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + members.length - 1) % members.length); }} aria-label={t.previousPhoto}>{t.previous}</button>
           <figure onClick={(event) => event.stopPropagation()}>
             <Image src={activeMember.photo} alt={`${t.portraitOf} ${activeMember.name}, ${t.roles[activeMember.role] ?? activeMember.role}`} width={800} height={1067} sizes="90vw" />
             <figcaption><b>{activeMember.name}</b><span>{t.roles[activeMember.role] ?? activeMember.role}</span></figcaption>
           </figure>
-          <button className="viewer-step viewer-next" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + 1) % members.length); }} aria-label={t.nextPhoto}>→</button>
+          <button className="viewer-step viewer-next" onClick={(event) => { event.stopPropagation(); setActiveIndex((activeIndex + 1) % members.length); }} aria-label={t.nextPhoto}>{t.next}</button>
         </div>
       )}
     </main>
@@ -495,12 +493,23 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
 export default function Page() {
   const [language,setLanguage]=useState(null); const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
   useEffect(()=>{const saved=window.localStorage.getItem("innoverse-language");if(saved==="fr"||saved==="en")setLanguage(saved)},[]);
+  useEffect(()=>{
+    window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href);
+    const returnToHome=()=>{
+      setGame(null);setWon(false);setPortfolio(false);setShowGames(false);
+      window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href);
+    };
+    window.addEventListener("popstate",returnToHome);
+    return()=>window.removeEventListener("popstate",returnToHome);
+  },[]);
   useEffect(()=>{if(language)document.documentElement.lang=language},[language]);
   const selectLanguage=(nextLanguage)=>{window.localStorage.setItem("innoverse-language",nextLanguage);setLanguage(nextLanguage)};
+  const goHome=()=>{setGame(null);setWon(false);setPortfolio(false);setShowGames(false);window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href)};
+  const navigate=(view,update)=>{window.history.pushState({...window.history.state,innoverse:true,view},"",window.location.href);update()};
   if(!language) return <LanguageSelect onSelect={selectLanguage}/>;
-  if(portfolio) return <Portfolio lang={language} onChangeLanguage={()=>setLanguage(null)} onBack={()=>{setPortfolio(false);setWon(false);setGame(null);setShowGames(false)}}/>;
-  if(won) return <Victory lang={language} onEnter={()=>setPortfolio(true)}/>;
-  if(game) return <GameScreen gameId={game} lang={language} onBack={()=>setGame(null)} onWin={()=>setWon(true)} soundEnabled={soundEnabled}/>;
-  if(showGames) return <Home lang={language} onPlay={setGame} onEnterPortfolio={()=>setPortfolio(true)} onBackLanding={()=>setShowGames(false)} onChangeLanguage={()=>setLanguage(null)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
-  return <Landing lang={language} onChangeLanguage={()=>setLanguage(null)} onEnterPortfolio={()=>setPortfolio(true)} onExploreGames={()=>setShowGames(true)}/>;
+  if(portfolio) return <Portfolio lang={language} onChangeLanguage={()=>setLanguage(null)} onBack={goHome}/>;
+  if(won) return <Victory lang={language} onEnter={()=>navigate("portfolio",()=>setPortfolio(true))}/>;
+  if(game) return <GameScreen gameId={game} lang={language} onBack={goHome} onWin={()=>navigate("victory",()=>setWon(true))} soundEnabled={soundEnabled}/>;
+  if(showGames) return <Home lang={language} onPlay={(gameId)=>navigate("game",()=>setGame(gameId))} onEnterPortfolio={()=>navigate("portfolio",()=>setPortfolio(true))} onBackLanding={goHome} onChangeLanguage={()=>setLanguage(null)} audience={audience} setAudience={setAudience} soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled}/>;
+  return <Landing lang={language} onChangeLanguage={()=>setLanguage(null)} onEnterPortfolio={()=>navigate("portfolio",()=>setPortfolio(true))} onExploreGames={()=>navigate("games",()=>setShowGames(true))}/>;
 }
