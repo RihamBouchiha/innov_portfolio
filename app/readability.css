@@ -97,6 +97,8 @@
 .landing-nav nav{display:flex;align-items:center;gap:24px}
 .landing-nav nav a{display:flex;align-items:center;gap:8px;color:#44516f;text-decoration:none;font:600 10px "Space Grotesk"}
 .landing-nav nav a span{color:#e76451;font-size:14px}
+.landing-nav nav a::after,.landing-actions button::after,.landing-signals button::after{content:none!important;display:none!important}
+.landing-nav nav a>span,.landing-actions button>span,.landing-signals button>span{display:none!important}
 .landing-hero{width:min(100%,1440px);min-height:680px;height:calc(78svh - 70px);max-height:850px;position:relative;isolation:isolate;overflow:hidden;margin:20px auto 0;background:#18243d}
 .landing-team-image{z-index:-2;object-fit:cover;object-position:center 36%;animation:landing-photo-in .8s ease-out both}
 .landing-shade{position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(10,19,40,.84),rgba(10,19,40,.46) 48%,rgba(10,19,40,.04) 100%),linear-gradient(0deg,rgba(10,19,40,.55),transparent 45%)}
