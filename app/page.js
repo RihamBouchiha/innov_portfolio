@@ -73,16 +73,27 @@ function Logo({ compact = false }) {
 }
 
 function LanguageSelect({ onSelect }) {
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const selectionTimer = useRef(null);
+
+  useEffect(() => () => clearTimeout(selectionTimer.current), []);
+
+  const chooseLanguage = (language) => {
+    if (selectedLanguage) return;
+    setSelectedLanguage(language);
+    selectionTimer.current = setTimeout(() => onSelect(language), 900);
+  };
+
   return (
-    <main className="language-screen">
+    <main className={`language-screen ${selectedLanguage ? "language-confirming" : ""}`}>
       <div className="language-panel">
         <Logo />
         <span className="language-kicker">INNOVERSE · ENIAD</span>
         <h1>Choisis ta langue</h1>
         <p>Choose your language</p>
         <div className="language-options">
-          <button onClick={() => onSelect("fr")}><span>FR</span><b>Français</b></button>
-          <button onClick={() => onSelect("en")}><span>EN</span><b>English</b></button>
+          <button className={selectedLanguage === "fr" ? "selected" : ""} onClick={() => chooseLanguage("fr")} disabled={Boolean(selectedLanguage)}><span>FR</span><b>Français</b></button>
+          <button className={selectedLanguage === "en" ? "selected" : ""} onClick={() => chooseLanguage("en")} disabled={Boolean(selectedLanguage)}><span>EN</span><b>English</b></button>
         </div>
       </div>
       <span className="language-foot">COMMUNITY · CREATIVITY · TECHNOLOGY</span>
@@ -492,7 +503,6 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
 
 export default function Page() {
   const [language,setLanguage]=useState(null); const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
-  useEffect(()=>{const saved=window.localStorage.getItem("innoverse-language");if(saved==="fr"||saved==="en")setLanguage(saved)},[]);
   useEffect(()=>{
     window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href);
     const returnToHome=()=>{

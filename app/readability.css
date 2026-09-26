@@ -80,11 +80,17 @@
 .language-options{width:100%;display:grid;gap:10px;margin-top:26px}
 .language-options button{min-height:62px;display:grid;grid-template-columns:38px 1fr;align-items:center;gap:14px;padding:0 16px;border:1px solid rgba(46,62,111,.14);border-radius:10px;background:#fff;color:#1e2a49;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s}
 .language-options button:hover{transform:translateY(-2px);border-color:rgba(49,116,168,.4);box-shadow:0 9px 22px rgba(44,65,119,.1)}
+.language-options button:disabled{cursor:default}
+.language-options button:disabled:not(.selected){opacity:.48;transform:scale(.98)}
+.language-options button.selected{border-color:#536dfe;background:#f3f5ff;box-shadow:0 0 0 4px rgba(83,109,254,.12),0 12px 28px rgba(44,65,119,.14);transform:scale(1.025)}
+.language-confirming .language-panel{animation:language-confirm .9s ease both}
 .language-options button>span{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#eef3fa;color:#38527a;font:700 10px "Space Grotesk"}
 .language-options button>b{font:600 14px "Space Grotesk"}
 .language-options button:focus-visible{outline:3px solid rgba(83,109,254,.42);outline-offset:3px}
 .language-foot{position:absolute;bottom:20px;color:#8791a8;font:700 7px "Space Grotesk";letter-spacing:1.7px}
 .landing-language,.language-switch{min-width:34px;height:34px;padding:0 9px;border:1px solid rgba(40,55,97,.15);border-radius:8px;background:rgba(255,255,255,.76);color:#354668;font:700 9px "Space Grotesk";cursor:pointer}
+@keyframes language-confirm{0%,65%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-8px) scale(.985)}}
+@media(prefers-reduced-motion:reduce){.language-confirming .language-panel{animation:none}.language-options button{transition:none}}
 .portfolio-nav-actions{display:flex;align-items:center;gap:9px}
 .landing-page{min-height:100svh;padding:22px clamp(18px,5vw,72px) 24px;background:linear-gradient(145deg,#f8fbff,#edf2f9 58%,#fff5f0);color:#15213c}
 .landing-nav{width:min(100%,1440px);min-height:50px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:2}
