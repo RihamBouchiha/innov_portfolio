@@ -504,18 +504,19 @@ function Portfolio({ lang, onBack, onChangeLanguage }) {
 export default function Page() {
   const [language,setLanguage]=useState(null); const [game,setGame]=useState(null); const [won,setWon]=useState(false); const [portfolio,setPortfolio]=useState(false); const [showGames,setShowGames]=useState(false); const [audience,setAudience]=useState("discovery"); const [soundEnabled,setSoundEnabled]=useState(true);
   useEffect(()=>{
-    window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href);
-    const returnToHome=()=>{
+    const syncViewWithPath=()=>{
       setGame(null);setWon(false);setPortfolio(false);setShowGames(false);
-      window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href);
+      if(window.location.pathname==="/club")setPortfolio(true);
     };
-    window.addEventListener("popstate",returnToHome);
-    return()=>window.removeEventListener("popstate",returnToHome);
+    syncViewWithPath();
+    window.history.replaceState({...window.history.state,innoverse:true,view:window.location.pathname==="/club"?"portfolio":"home"},"",window.location.href);
+    window.addEventListener("popstate",syncViewWithPath);
+    return()=>window.removeEventListener("popstate",syncViewWithPath);
   },[]);
   useEffect(()=>{if(language)document.documentElement.lang=language},[language]);
   const selectLanguage=(nextLanguage)=>setLanguage(nextLanguage);
-  const goHome=()=>{setGame(null);setWon(false);setPortfolio(false);setShowGames(false);window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"",window.location.href)};
-  const navigate=(view,update)=>{window.history.pushState({...window.history.state,innoverse:true,view},"",window.location.href);update()};
+  const goHome=()=>{setGame(null);setWon(false);setPortfolio(false);setShowGames(false);window.history.replaceState({...window.history.state,innoverse:true,view:"home"},"","/");window.scrollTo(0,0)};
+  const navigate=(view,update)=>{const path=view==="portfolio"?"/club":window.location.pathname;window.history.pushState({...window.history.state,innoverse:true,view},"",path);update();window.scrollTo(0,0)};
   if(!language) return <LanguageSelect onSelect={selectLanguage}/>;
   if(portfolio) return <Portfolio lang={language} onChangeLanguage={()=>setLanguage(null)} onBack={goHome}/>;
   if(won) return <Victory lang={language} onEnter={()=>navigate("portfolio",()=>{setWon(false);setPortfolio(true)})}/>;
