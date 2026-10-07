@@ -1,0 +1,12 @@
+.next
+out
+node_modules
+New folder
+*.zip
+package-lock.json
+app/globals.css
+app/readability.css
+images
+public
+AGENTS.md
+CLAUDE.md

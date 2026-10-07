@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Starfield</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <!-- Added dark-mode by default so the stars pop immediately -->
+  <body class="dark-mode">
+    <canvas id="starfield"></canvas>
+
+    <div class="content">
+      <h1>Interactive Starfield</h1>
+      <p>
+        Scroll down to test the parallax effect, or move your mouse to repel the
+        stars.
+      </p>
+      <button id="theme-toggle">Toggle Theme</button>
+    </div>
+
+    <script src="starfield.js"></script>
+    <script>
+      // Simple toggle switch to test your script's dark/light mode check
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+      });
+    </script>
+  </body>
+</html>
